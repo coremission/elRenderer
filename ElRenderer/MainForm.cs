@@ -27,6 +27,8 @@ namespace ElRenderer
             screen = new Bitmap(WIDTH, HEIGHT);
             
             screen.elDrawLine(50, 50, 200, 200);
+            screen.elDrawLine(50, 60, 300, 100);
+            screen.elDrawLine(50, 50, 50, 200);
         }
 
         protected override void OnPaint(PaintEventArgs e)
