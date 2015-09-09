@@ -6,3 +6,10 @@ D:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.Properties.Resources.resources
 D:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.csproj.GenerateResource.Cache
 D:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.exe
 D:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.pdb
+f:\Projects\elrenderer\ElRenderer\bin\Debug\ElRenderer.exe.config
+f:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.exe
+f:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.pdb
+f:\Projects\elrenderer\ElRenderer\bin\Debug\ElRenderer.exe
+f:\Projects\elrenderer\ElRenderer\bin\Debug\ElRenderer.pdb
+f:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.Properties.Resources.resources
+f:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.csproj.GenerateResource.Cache

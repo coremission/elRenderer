@@ -26,9 +26,12 @@ namespace ElRenderer
             InitForm();
             screen = new Bitmap(WIDTH, HEIGHT);
             
-            screen.elDrawLine(50, 50, 200, 200);
-            screen.elDrawLine(50, 60, 300, 100);
-            screen.elDrawLine(50, 50, 50, 200);
+            screen.elDrawLine(450, 50, 200, 100, Color.Yellow);
+            
+            screen.elDrawLine(200, 140, 200, 340, Color.Tomato);
+            screen.elDrawLine(50, 60, 300, 100, Color.Blue);
+            screen.elDrawLine(150, 165, 300, 200, Color.GreenYellow);
+            screen.elDrawLine(40, 40, 150, 500, Color.Red);
         }
 
         protected override void OnPaint(PaintEventArgs e)
