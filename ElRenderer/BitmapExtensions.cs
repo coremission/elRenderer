@@ -7,29 +7,48 @@ namespace ElRenderer
     {
         public static void elDrawLine(this Bitmap bitmap, int xStart, int yStart, int xEnd, int yEnd, Color color)
         {
-            bool changeIterationAxis = Math.Abs(yStart - yEnd) > Math.Abs(xStart - xEnd);
+            int y = 0;
+            float k;
 
-            float slopeCoefficient = ((float)(yEnd - yStart)) / ((float)(xEnd - xStart));
+            // change cycle axis
+            bool changeAxis = (Math.Abs(xStart - xEnd) < Math.Abs(yStart - yEnd));
 
-            float error = 0f;
+            int x0 = changeAxis ? yStart : xStart;
+            int x1 = changeAxis ? yEnd : xEnd;
+            int y0 = changeAxis ? xStart : yStart;
+            int y1 = changeAxis ? xEnd : yEnd;
+
+            // change direction
+            if(xStart > xEnd)
+            {
+                x0 = xEnd;
+                x1 = xStart;
+                y0 = yEnd;
+                y1 = yStart;
+            }
             
-            int j = changeIterationAxis ? yStart : xStart;
-            int iStart = changeIterationAxis ? yStart : xStart;
-            int iEnd = changeIterationAxis ? yEnd : xEnd;
+            if (x1 == x0)
+                k = 0;
+            else
+                k = (float)(y1 - y0) / (float)(x1 - x0);
+            
+            for (int x = x0; x <= x1; x++) {
+                y = (int)(k * (x - x0)) + y0;
 
-            for (int i = iStart; i <= iEnd; i++) {
-                error += slopeCoefficient;
-                if (error > 0.5f) {
-                    j++;
-                    error--;
-                }
-
-                if(changeIterationAxis)
-                    bitmap.SetPixel(j, i, color);
+                if(changeAxis)
+                    bitmap.elDrawPoint(y, x, color);
                 else
-                    bitmap.SetPixel(i, j, color);
+                    bitmap.elDrawPoint(x, y, color);
             }
         }
 
+        public static void elDrawPoint(this Bitmap bitmap, int x, int y, Color color)
+        {
+            if (y > bitmap.Size.Height)
+                return;
+            if (x > bitmap.Size.Width)
+                return;
+            bitmap.SetPixel(x, bitmap.Size.Height - y, color);
+        }
     }
 }
