@@ -48,6 +48,12 @@ namespace ElRenderer
                 return;
             if (x > bitmap.Size.Width)
                 return;
+
+            if (y <= 0)
+                y = 1;
+            if (x < 0)
+                x = 1;
+
             bitmap.SetPixel(x, bitmap.Size.Height - y, color);
         }
     }
