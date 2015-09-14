@@ -48,11 +48,12 @@
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Model\Matrix3x3.cs" />
+    <Compile Include="Model\Triangle.cs" />
+    <Compile Include="Model\Float3x3.cs" />
     <Compile Include="Model\Mesh.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\Vector3.cs" />
+    <Compile Include="Model\Float3.cs" />
     <Compile Include="Service\WaveObjHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

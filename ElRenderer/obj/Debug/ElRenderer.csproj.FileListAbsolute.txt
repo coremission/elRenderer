@@ -14,3 +14,5 @@ f:\Projects\elrenderer\ElRenderer\bin\Debug\ElRenderer.pdb
 f:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.Properties.Resources.resources
 f:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.csproj.GenerateResource.Cache
 D:\!My\ElRenderer\ElRenderer\bin\Debug\african_head.obj
+F:\Projects\elrenderer\ElRenderer\bin\Debug\african_head.obj
+F:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.csprojResolveAssemblyReference.cache

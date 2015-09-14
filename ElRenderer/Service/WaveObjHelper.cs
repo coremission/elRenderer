@@ -20,12 +20,21 @@ namespace ElRenderer.Service
                 
                 string[] lineParts = lines[i].Split(' ');
 
-                if (lineParts[0] != "v")
-                    continue;
+                if (lineParts[0] == "v")
+                {
+                    Float3 v = new Float3(float.Parse(lineParts[1], System.Globalization.CultureInfo.InvariantCulture),
+                        float.Parse(lineParts[2], System.Globalization.CultureInfo.InvariantCulture),
+                        float.Parse(lineParts[3], System.Globalization.CultureInfo.InvariantCulture));
+                    result.Vertices.Add(v);
+                }
+                if (lineParts[0] == "f")
+                {
+                    int a = int.Parse(lineParts[1].Split('/')[0]);
+                    int b = int.Parse(lineParts[2].Split('/')[0]);
+                    int c = int.Parse(lineParts[3].Split('/')[0]);
 
-                Vector3 v = new Vector3(float.Parse(lineParts[1]), float.Parse(lineParts[2]), float.Parse(lineParts[3]));
-
-                result.Vertices.Add(v);
+                    result.Triangles.Add(new Triangle(a, b, c));
+                }
             }
             
             return result;

@@ -1,32 +1,50 @@
 ﻿using System.Drawing;
 using System;
+using ElRenderer.Model;
 
 namespace ElRenderer
 {
     public static class BitmapExtensions
     {
+        public static void elDrawTriangle(this Bitmap b, Float3 v1, Float3 v2, Float3 v3, Color color)
+        {
+            b.elDrawLine(v1, v2, color);
+            b.elDrawLine(v2, v3, color);
+            b.elDrawLine(v3, v1, color);
+        }
+
+        public static void elDrawLine(this Bitmap b, Float3 v0, Float3 v1, Color color)
+        {
+            b.elDrawLine(v0.x, v0.y, v1.x, v1.y, color);
+        }
+        public static void elDrawLine(this Bitmap b, float xStart, float yStart, float xEnd, float yEnd, Color color)
+        {
+            elDrawLine(b, (int) xStart, (int) yStart, (int) xEnd, (int) yEnd, color);
+        }
         public static void elDrawLine(this Bitmap bitmap, int xStart, int yStart, int xEnd, int yEnd, Color color)
         {
-            int y = 0;
+            int y;
             float k;
 
-            // change cycle axis
-            bool changeAxis = (Math.Abs(xStart - xEnd) < Math.Abs(yStart - yEnd));
+            int x0 = xStart, x1 = xEnd, y0 = yStart, y1 = yEnd;
 
-            int x0 = changeAxis ? yStart : xStart;
-            int x1 = changeAxis ? yEnd : xEnd;
-            int y0 = changeAxis ? xStart : yStart;
-            int y1 = changeAxis ? xEnd : yEnd;
+
+            // change cycle axis
+            bool changeAxis = (Math.Abs(x0 - x1) < Math.Abs(y0 - y1));
+            if (changeAxis)
+            {
+                swap(ref x0, ref y0);
+                swap(ref x1, ref y1);
+            }
 
             // change direction
-            if(xStart > xEnd)
+            if (x0 > x1)
             {
-                x0 = xEnd;
-                x1 = xStart;
-                y0 = yEnd;
-                y1 = yStart;
+                swap(ref x0, ref x1);
+                swap(ref y0, ref y1);
             }
-            
+
+
             if (x1 == x0)
                 k = 0;
             else
@@ -42,6 +60,17 @@ namespace ElRenderer
             }
         }
 
+        private static void swap(ref int a, ref int b)
+        {
+            int buffer = a;
+            a = b;
+            b = buffer;
+        }
+
+        public static void elDrawPoint(this Bitmap b, float x, float y, Color color)
+        {
+            elDrawPoint(b, (int)x, (int)y, color);
+        }
         public static void elDrawPoint(this Bitmap bitmap, int x, int y, Color color)
         {
             if (y > bitmap.Size.Height)
@@ -52,7 +81,9 @@ namespace ElRenderer
             if (y <= 0)
                 y = 1;
             if (x < 0)
-                x = 1;
+                x = 0;
+            if (x >= bitmap.Width)
+                x = bitmap.Width - 1;
 
             bitmap.SetPixel(x, bitmap.Size.Height - y, color);
         }
