@@ -44,7 +44,6 @@ namespace ElRenderer
             Float3[] t1 = new [] {new Float3(180, 50, 0), new Float3(150, 1, 0), new Float3(70, 180, 0)};
             Float3[] t2 = new [] {new Float3(180, 150, 0), new Float3(120, 160, 0), new Float3(130, 180, 0)};
 
-
             screen.elDrawTriangle(t0[0], t0[1], t0[2], Color.Red);
             screen.elDrawTriangle(t1[0], t1[1], t1[2], Color.White);
             screen.elDrawTriangle(t2[0], t2[1], t2[2], Color.GreenYellow);

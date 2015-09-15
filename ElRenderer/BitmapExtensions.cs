@@ -8,6 +8,15 @@ namespace ElRenderer
     {
         public static void elDrawTriangle(this Bitmap b, Float3 v1, Float3 v2, Float3 v3, Color color)
         {
+            Box3d bb = Utils.getBoundingBox(v1, v2, v3).Value;
+
+            for (int i = (int)bb.min.x; i < (int)bb.max.x; i++)
+                for (int j = (int)bb.min.y; j < (int)bb.max.y; j++)
+                {
+                    if(Utils.getBarycentricCoordinates(v1, v2, v3, p))
+                    b.elDrawPoint(i, j, color);
+                }
+
             b.elDrawLine(v1, v2, color);
             b.elDrawLine(v2, v3, color);
             b.elDrawLine(v3, v1, color);
