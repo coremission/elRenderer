@@ -8,13 +8,17 @@ namespace ElRenderer
     {
         public static void elDrawTriangle(this Bitmap b, Float3 v1, Float3 v2, Float3 v3, Color color)
         {
-            Box3d bb = Utils.getBoundingBox(v1, v2, v3).Value;
+            elDrawTriangle(b, v1.xy, v2.xy, v3.xy, color);
+        }
+        public static void elDrawTriangle(this Bitmap b, Float2 v1, Float2 v2, Float2 v3, Color color)
+        {
+            Box2d bb = Utils.getBoundingBox2d(v1, v2, v3).Value;
 
             for (int i = (int)bb.min.x; i < (int)bb.max.x; i++)
                 for (int j = (int)bb.min.y; j < (int)bb.max.y; j++)
                 {
-                    if(Utils.getBarycentricCoordinates(v1, v2, v3, p))
-                    b.elDrawPoint(i, j, color);
+                    if (Utils.getBarycentricCoordinates(v1, v2, v3, new Float2(i, j)).IsAllComponentsPositive())
+                        b.elDrawPoint(i, j, color);
                 }
 
             b.elDrawLine(v1, v2, color);
@@ -23,6 +27,10 @@ namespace ElRenderer
         }
 
         public static void elDrawLine(this Bitmap b, Float3 v0, Float3 v1, Color color)
+        {
+            b.elDrawLine(v0.x, v0.y, v1.x, v1.y, color);
+        }
+        public static void elDrawLine(this Bitmap b, Float2 v0, Float2 v1, Color color)
         {
             b.elDrawLine(v0.x, v0.y, v1.x, v1.y, color);
         }

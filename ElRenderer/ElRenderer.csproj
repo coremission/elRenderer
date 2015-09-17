@@ -48,7 +48,9 @@
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Model\Box.cs" />
+    <Compile Include="Model\Box2d.cs" />
+    <Compile Include="Model\Box3d.cs" />
+    <Compile Include="Model\Float2.cs" />
     <Compile Include="Model\Triangle.cs" />
     <Compile Include="Model\Float3x3.cs" />
     <Compile Include="Model\Mesh.cs" />

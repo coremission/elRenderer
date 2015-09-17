@@ -6,6 +6,11 @@
         public float y;
         public float z;
 
+        public Float2 xy
+        {
+            get { return new Float2(x, y); }
+        }
+
         public Float3(float x, float y, float z)
         {
             this.x = x;
@@ -16,6 +21,11 @@
         public float[] ToFloatArray()
         {
             return new float[]{ x, y, z };
+        }
+
+        public bool IsAllComponentsPositive()
+        {
+            return this.x > 0 && this.y > 0 && this.z > 0;
         }
 
         public override string ToString()
@@ -37,11 +47,6 @@
         public float length()
         {
             return this.dot(this);
-        }
-
-        public static Float3 getBarycentric(Float3 p, Float3 a, Float3 b, Float3 c)
-        {
-            return new Float3(0, 0, 0);
         }
     }
 }
