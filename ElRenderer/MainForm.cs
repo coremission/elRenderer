@@ -29,6 +29,15 @@ namespace ElRenderer
         Bitmap screen;
         private string appPath;
 
+        private Color getRandomColor()
+        {
+            Random randomGen = new Random();
+            KnownColor[] names = (KnownColor[])Enum.GetValues(typeof(KnownColor));
+            KnownColor randomColorName = names[randomGen.Next(names.Length)];
+            Color randomColor = Color.FromKnownColor(randomColorName);
+            return randomColor;
+        }
+
         public MainForm()
         {
             appPath = Application.ExecutablePath;
@@ -40,6 +49,7 @@ namespace ElRenderer
 
             Color color = Color.MediumAquamarine;
 
+            
             Float3[] t0 = new [] {new Float3(10, 70, 0), new Float3(50, 160, 0), new Float3(70, 80, 0)};
             Float3[] t1 = new [] {new Float3(180, 50, 0), new Float3(150, 1, 0), new Float3(70, 180, 0)};
             Float3[] t2 = new [] {new Float3(180, 150, 0), new Float3(120, 160, 0), new Float3(130, 180, 0)};
@@ -49,11 +59,12 @@ namespace ElRenderer
             screen.elDrawTriangle(t2[0], t2[1], t2[2], Color.GreenYellow);
 
             return;
+            
             Mesh mesh = WaveObjHelper.ReadMeshFromFile(appPath + "african_head.obj");
 
             float scaleFactor = 300;
             Float3x3 S = Float3x3.identity*scaleFactor;
-            Float3x3 R = Float3x3.getRotationMatrix(-30, 0, 0);
+            Float3x3 R = Float3x3.getRotationMatrix(0, 0, 0);
 
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {
@@ -80,9 +91,10 @@ namespace ElRenderer
                 Float3 v2 = mesh.Vertices[t[1] - 1];
                 Float3 v3 = mesh.Vertices[t[2] - 1];
 
-                screen.elDrawLine(v1.x, v1.y, v2.x, v2.y, color);
-                screen.elDrawLine(v2.x, v2.y, v3.x, v3.y, color);
-                screen.elDrawLine(v3.x, v3.y, v1.x, v1.y, color);
+                screen.elDrawTriangle(v1, v2, v3, getRandomColor());
+                //screen.elDrawLine(v1.x, v1.y, v2.x, v2.y, color);
+                //screen.elDrawLine(v2.x, v2.y, v3.x, v3.y, color);
+                //screen.elDrawLine(v3.x, v3.y, v1.x, v1.y, color);
             }
         }
 
