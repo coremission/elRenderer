@@ -35,17 +35,30 @@ namespace ElRenderer.Model
             return string.Format("({0}, {1}, {2})", x, y, z);
         }
 
+        public static Float3 operator - (Float3 a, Float3 b)
+        {
+            return new Float3(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+
+        public static Float3 operator + (Float3 a, Float3 b)
+        {
+            return new Float3(a.x + b.x, a.y + b.y, a.z + b.z);
+        }
+
+        public static Float3 operator * (Float3 M, float scalar){
+            return new Float3(M.x * scalar, M.y * scalar, M.z * scalar);
+        }
+
+        public static Float3 operator *(float scalar, Float3 M)
+        {
+            return M * scalar;
+        }
+
         public float dot(Float3 other)
         {
             return this.x * other.x + this.y * other.y + this.z * other.z;
         }
 
-        public static Float3 operator -(Float3 a, Float3 b)
-        {
-            return new Float3(a.x - b.x,
-                              a.y - b.y,
-                              a.z - b.z);
-        }
         public Float3 cross(Float3 other)
         {
             //c  = a cross b
@@ -78,6 +91,11 @@ namespace ElRenderer.Model
         public Float3 getOpposite()
         {
             return new Float3(-x, -y, -z);
+        }
+
+        public Float3 lerp(Float3 start, Float3 end, float delta)
+        {
+            return start + (end - start) * delta;
         }
     }
 }

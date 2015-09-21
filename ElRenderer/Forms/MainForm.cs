@@ -39,7 +39,7 @@ namespace ElRenderer
             
             Mesh mesh = WaveObjHelper.ReadMeshFromFile(appPath + "african_head.obj");
 
-            renderer = new Renderer();
+            renderer = new Renderer(BackgroundColor);
             renderer.RenderTo(screen, mesh);
         }
 

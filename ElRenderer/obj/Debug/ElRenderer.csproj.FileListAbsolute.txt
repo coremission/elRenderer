@@ -1,7 +1,6 @@
 D:\!My\ElRenderer\ElRenderer\bin\Debug\ElRenderer.exe.config
 D:\!My\ElRenderer\ElRenderer\bin\Debug\ElRenderer.exe
 D:\!My\ElRenderer\ElRenderer\bin\Debug\ElRenderer.pdb
-D:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.csprojResolveAssemblyReference.cache
 D:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.Properties.Resources.resources
 D:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.csproj.GenerateResource.Cache
 D:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.exe
@@ -16,3 +15,4 @@ f:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.csproj.GenerateResource.C
 D:\!My\ElRenderer\ElRenderer\bin\Debug\african_head.obj
 F:\Projects\elrenderer\ElRenderer\bin\Debug\african_head.obj
 F:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.csprojResolveAssemblyReference.cache
+d:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.csprojResolveAssemblyReference.cache

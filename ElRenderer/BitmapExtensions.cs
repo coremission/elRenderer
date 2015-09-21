@@ -6,89 +6,16 @@ namespace ElRenderer
 {
     public static class BitmapExtensions
     {
-        private static int _int(float f) { return (int)(f + 0.5f); }
-
-        private static int lerp(int start, int end, float delta)
+        private static int _int(float f)
         {
-            return (int)(start + (end - start) * delta + 0.5f);
+            return (int)(f + 0.5f);
         }
 
-        private static T min<T>(T a, T b) where T: IComparable<T>
+        private static void swap<T>(ref T a, ref T b)
         {
-            return a.CompareTo(b) <= 0 ? a : b;
-        }
-
-        private static T max<T>(T a, T b) where T : IComparable<T>
-        {
-            return a.CompareTo(b) >= 0 ? a : b;
-        }
-
-        public static void elDrawTriangle2(this Bitmap b, Float2 v1, Float2 v2, Float2 v3, Color color)
-        {
-            b.elDrawTriangle2((Int2)v1, (Int2)v2, (Int2)v3, color);
-        }
-
-        public static void elDrawTriangle2(this Bitmap b, Int2 v1, Int2 v2, Int2 v3, Color color)
-        {
-            if (v1.y > v2.y) swap(ref v1, ref v2);
-            if (v1.y > v3.y) swap(ref v1, ref v3);
-            if (v2.y > v3.y) swap(ref v2, ref v3);
-
-            b.elDrawLine(v1, v2, color);
-            b.elDrawLine(v2, v3, color);
-            b.elDrawLine(v3, v1, color);
-            
-            /*
-            int total_height = t2.y - t0.y;
-            for (int y = t0.y; y <= t1.y; y++)
-            {
-                int segment_height = t1.y - t0.y + 1;
-                float alpha = (float)(y - t0.y) / total_height;
-                float beta = (float)(y - t0.y) / segment_height; // be careful with divisions by zero
-                Vec2i A = t0 + (t2 - t0) * alpha;
-                Vec2i B = t0 + (t1 - t0) * beta;
-                image.set(A.x, y, red);
-                image.set(B.x, y, green);
-            }*/
-
-            int triangleYHeight = v3.y - v1.y + 1;
-            int segmentHeight = v2.y - v1.y + 1;
-
-            for (int y = v1.y; y <= v2.y; y++)
-            {
-                float alpha = (float)(y - v1.y) / (float)triangleYHeight;
-                float beta  = (float)(y - v1.y) / (float)segmentHeight;
-
-                int ax = lerp(v1.x, v3.x, alpha);
-                int bx = lerp(v1.x, v2.x, beta);
-
-                for (int x = min(ax, bx); x <= max(ax, bx); x++)
-                    b.elDrawPoint(x, y, color);
-            }
-            segmentHeight = v3.y - v2.y + 1;
-            for (int y = v2.y; y <= v3.y; y++)
-            {
-                float alpha = (float)(y - v1.y) / (float) triangleYHeight;
-                float beta = (float)(y - v2.y) / (float) segmentHeight;
-
-                int ax = lerp(v1.x, v3.x, alpha);
-                int bx = lerp(v2.x, v3.x, beta);
-
-                for (int x = min(ax, bx); x <= max(ax, bx); x++)
-                    b.elDrawPoint(x, y, color);
-            }
-            /*
-            for (int y=t1.y; y<=t2.y; y++) {
-                int segment_height =  t2.y-t1.y+1;
-                float alpha = (float)(y-t0.y)/total_height;
-                float beta  = (float)(y-t1.y)/segment_height; // be careful with divisions by zero
-                Vec2i A = t0 + (t2-t0)*alpha;
-                Vec2i B = t1 + (t2-t1)*beta;
-                if (A.x>B.x) std::swap(A, B);
-                for (int j=A.x; j<=B.x; j++) {
-                    image.set(j, y, color); // attention, due to int casts t0.y+i != A.y
-                }
-            }*/     
+            T buffer = a;
+            a = b;
+            b = buffer;
         }
 
         public static void elDrawTriangle(this Bitmap b, Float3 v1, Float3 v2, Float3 v3, Color color)
@@ -165,14 +92,7 @@ namespace ElRenderer
                     bitmap.elDrawPoint(x, y, color);
             }
         }
-
-        private static void swap<T>(ref T a, ref T b)
-        {
-            T buffer = a;
-            a = b;
-            b = buffer;
-        }
-
+        
         public static void elDrawPoint(this Bitmap bitmap, int x, int y, Color color)
         {
             if (y > bitmap.Size.Height)
