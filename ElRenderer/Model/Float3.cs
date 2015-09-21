@@ -74,5 +74,10 @@ namespace ElRenderer.Model
             float l = length();
             return new Float3(this.x / l, this.y / l, this.z / l);
         }
+
+        public Float3 getOpposite()
+        {
+            return new Float3(-x, -y, -z);
+        }
     }
 }
