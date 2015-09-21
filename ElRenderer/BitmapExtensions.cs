@@ -6,6 +6,8 @@ namespace ElRenderer
 {
     public static class BitmapExtensions
     {
+        private static int _int(float f) { return Convert.ToInt32(f); }
+
         public static void elDrawTriangle(this Bitmap b, Float3 v1, Float3 v2, Float3 v3, Color color)
         {
             elDrawTriangle(b, v1.xy, v2.xy, v3.xy, color);
@@ -14,8 +16,8 @@ namespace ElRenderer
         {
             Box2d bb = Utils.getBoundingBox2d(v1, v2, v3).Value;
 
-            for (int i = (int)bb.min.x; i < (int)bb.max.x; i++)
-                for (int j = (int)bb.min.y; j < (int)bb.max.y; j++)
+            for (int i = _int(bb.min.x); i < _int(bb.max.x); i++)
+                for (int j = _int(bb.min.y); j < _int(bb.max.y); j++)
                 {
                     if (Utils.getBarycentricCoordinates(v1, v2, v3, new Float2(i, j)).IsAllComponentsPositive())
                         b.elDrawPoint(i, j, color);
@@ -36,7 +38,7 @@ namespace ElRenderer
         }
         public static void elDrawLine(this Bitmap b, float xStart, float yStart, float xEnd, float yEnd, Color color)
         {
-            elDrawLine(b, (int) xStart, (int) yStart, (int) xEnd, (int) yEnd, color);
+            elDrawLine(b, _int(xStart), _int(yStart), _int(xEnd), _int(yEnd), color);
         }
         public static void elDrawLine(this Bitmap bitmap, int xStart, int yStart, int xEnd, int yEnd, Color color)
         {
@@ -86,7 +88,7 @@ namespace ElRenderer
 
         public static void elDrawPoint(this Bitmap b, float x, float y, Color color)
         {
-            elDrawPoint(b, (int)x, (int)y, color);
+            elDrawPoint(b, _int(x), _int(y), color);
         }
         public static void elDrawPoint(this Bitmap bitmap, int x, int y, Color color)
         {

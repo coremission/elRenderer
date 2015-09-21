@@ -28,7 +28,7 @@ namespace ElRenderer
 
         Bitmap screen;
         private string appPath;
-
+        private Float3 lightDirection = new Float3(0, -1, 0).normalize();
         private Color getRandomColor()
         {
             Random randomGen = new Random();
@@ -50,16 +50,14 @@ namespace ElRenderer
             Color color = Color.MediumAquamarine;
 
             
-            Float3[] t0 = new [] {new Float3(10, 70, 0), new Float3(50, 160, 0), new Float3(70, 80, 0)};
-            Float3[] t1 = new [] {new Float3(180, 50, 0), new Float3(150, 1, 0), new Float3(70, 180, 0)};
-            Float3[] t2 = new [] {new Float3(180, 150, 0), new Float3(120, 160, 0), new Float3(130, 180, 0)};
+            //Float3[] t0 = new [] {new Float3(10, 70, 0), new Float3(50, 160, 0), new Float3(70, 80, 0)};
+            //Float3[] t1 = new [] {new Float3(180, 50, 0), new Float3(150, 1, 0), new Float3(70, 180, 0)};
+            //Float3[] t2 = new [] {new Float3(180, 150, 0), new Float3(120, 160, 0), new Float3(130, 180, 0)};
 
-            screen.elDrawTriangle(t0[0], t0[1], t0[2], Color.Red);
-            screen.elDrawTriangle(t1[0], t1[1], t1[2], Color.White);
-            screen.elDrawTriangle(t2[0], t2[1], t2[2], Color.GreenYellow);
+            //screen.elDrawTriangle(t0[0], t0[1], t0[2], Color.Red);
+            //screen.elDrawTriangle(t1[0], t1[1], t1[2], Color.White);
+            //screen.elDrawTriangle(t2[0], t2[1], t2[2], Color.GreenYellow);
 
-            return;
-            
             Mesh mesh = WaveObjHelper.ReadMeshFromFile(appPath + "african_head.obj");
 
             float scaleFactor = 300;
@@ -75,26 +73,26 @@ namespace ElRenderer
 
             }
             
-            for (int i = 0; i < mesh.Vertices.Count; i++)
-            {
-                Float3 v = mesh.Vertices[i];
-                screen.elDrawPoint(v.x, v.y, color);
-            }
-
-            int c = mesh.Triangles.Count;
+            int trianglesCount = mesh.Triangles.Count;
             
-            for (int i = 0; i < c; i++)
+            for (int i = 0; i < trianglesCount; i++)
             {
                 Triangle t = mesh.Triangles[i];
 
                 Float3 v1 = mesh.Vertices[t[0] - 1];
                 Float3 v2 = mesh.Vertices[t[1] - 1];
                 Float3 v3 = mesh.Vertices[t[2] - 1];
+                Float3 normal = (v3 - v1).cross(v2 - v1).normalize();
 
-                screen.elDrawTriangle(v1, v2, v3, getRandomColor());
-                //screen.elDrawLine(v1.x, v1.y, v2.x, v2.y, color);
-                //screen.elDrawLine(v2.x, v2.y, v3.x, v3.y, color);
-                //screen.elDrawLine(v3.x, v3.y, v1.x, v1.y, color);
+                int cc = (int)(255 * normal.dot(lightDirection));
+
+                // TODO: it is like backface culling
+                if (cc < 0)
+                    continue;
+
+                Color c = Color.FromArgb(cc, cc, cc);
+
+                screen.elDrawTriangle(v1, v2, v3, c);
             }
         }
 
