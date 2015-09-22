@@ -1,1 +1,5 @@
 *.suo
+*.exe
+*.pdb
+ElRenderer/bin
+ElRenderer/obj
