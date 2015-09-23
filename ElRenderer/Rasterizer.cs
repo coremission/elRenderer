@@ -126,11 +126,15 @@ namespace ElRenderer
 
         private void DrawPointToFrameBuffer(int x, int y, float z, Color c)
         {
+            // simply skip points outside screen
+            if (x < 0 || y < 0 || x > Defaults.WIDTH - 1 || y > Defaults.HEIGHT - 1)
+                return;
+
             // Z buffer test
-            if (zBuffer[x, y].z < z)
+            if (zBuffer[y, x].z < z)
             {
-                zBuffer[x, y].color = c;
-                zBuffer[x, y].z = z;
+                zBuffer[y, x].color = c;
+                zBuffer[y, x].z = z;
             }
         }
     }

@@ -37,7 +37,7 @@ namespace ElRenderer
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
             FillScreen(BackgroundColor);
             
-            Mesh mesh = WaveObjHelper.ReadMeshFromFile(appPath + "african_head.obj");
+            Mesh mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\Goku SS2.obj");
 
             renderer = new Renderer(BackgroundColor);
             renderer.RenderTo(screen, mesh);

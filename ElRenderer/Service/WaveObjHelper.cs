@@ -17,9 +17,9 @@ namespace ElRenderer.Service
             {
                 if (lines[i].Length == 0)
                     continue;
-                
-                string[] lineParts = lines[i].Split(' ');
 
+                string[] lineParts = ReplaceMultipleSpaces(lines[i]).Split(' ');
+                
                 if (lineParts[0] == "v")
                 {
                     Float3 v = new Float3(float.Parse(lineParts[1], System.Globalization.CultureInfo.InvariantCulture),
@@ -38,6 +38,11 @@ namespace ElRenderer.Service
             }
             
             return result;
+        }
+
+        private static string ReplaceMultipleSpaces(string s)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(s, @"\s+", " ");
         }
 
         public static Mesh ReadMeshFromStream(Stream stream)

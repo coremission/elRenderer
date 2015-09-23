@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Drawing;
-using System.Threading.Tasks;
 using ElRenderer.Model;
 
 namespace ElRenderer
@@ -15,9 +12,9 @@ namespace ElRenderer
         // Constructor
         public Renderer(Color backGroundColor)
         {
-            for (int x = 0; x < Defaults.HEIGHT; x++)
-                for (int y = 0; y < Defaults.WIDTH; y++)
-                    zBuffer[x, y] = new Fragment(backGroundColor);
+            for (int y = 0; y < Defaults.HEIGHT; y++)
+                for (int x = 0; x < Defaults.WIDTH; x++)
+                    zBuffer[y, x] = new Fragment(backGroundColor);
 
             rasterizer = new Rasterizer(zBuffer, lightDirection);
         }
@@ -34,7 +31,7 @@ namespace ElRenderer
             // Vertex uniforms
 
             // scale matrix
-            Float3x3 S = Float3x3.identity * 300;
+            Float3x3 S = Float3x3.identity * 30;
             // rotation matrix
             Float3x3 R = Float3x3.getRotationMatrix(0, 0, 0);
 

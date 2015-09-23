@@ -1,9 +1,6 @@
 D:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\ElRenderer_ConsoleTests.exe.config
-D:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\african_head.obj
 D:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\ElRenderer_ConsoleTests.exe
 D:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\ElRenderer_ConsoleTests.pdb
-D:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\ElRenderer.exe
-D:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\ElRenderer.pdb
 D:\!My\ElRenderer\ElRenderer_ConsoleTests\obj\Debug\ElRenderer_ConsoleTests.csprojResolveAssemblyReference.cache
 D:\!My\ElRenderer\ElRenderer_ConsoleTests\obj\Debug\ElRenderer_ConsoleTests.exe
 D:\!My\ElRenderer\ElRenderer_ConsoleTests\obj\Debug\ElRenderer_ConsoleTests.pdb
@@ -16,3 +13,7 @@ F:\Projects\elrenderer\ElRenderer_ConsoleTests\bin\Debug\ElRenderer_ConsoleTests
 F:\Projects\elrenderer\ElRenderer_ConsoleTests\bin\Debug\ElRenderer.exe
 F:\Projects\elrenderer\ElRenderer_ConsoleTests\bin\Debug\ElRenderer.pdb
 F:\Projects\elrenderer\ElRenderer_ConsoleTests\obj\Debug\ElRenderer_ConsoleTests.csprojResolveAssemblyReference.cache
+d:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\3dModels\farmhouse.obj
+d:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\3dModels\Goku SS2.obj
+d:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\3dModels\Goku SS3.obj
+d:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\3dModels\african_head.obj
