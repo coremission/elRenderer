@@ -56,8 +56,11 @@ namespace ElRenderer
             };
             mesh.Triangles = new List<Triangle>(){
                 new Triangle(1, 2, 3), new Triangle(1, 3, 4),
-                new Triangle(1, 8, 5), new Triangle(1, 5, 4),
-                new Triangle(4, 3, 6), new Triangle(4, 6, 5),                
+                new Triangle(1, 5, 8), new Triangle(1, 4, 5),
+                new Triangle(4, 3, 6), new Triangle(4, 6, 5), 
+                new Triangle(2, 6, 3), new Triangle(2, 7, 6),
+                new Triangle(1, 7, 2), new Triangle(1, 8, 7),
+                new Triangle(8, 5, 7), new Triangle(5, 6, 7),               
             };
 
             renderer.RenderTo(screen, mesh, RenderType.WireframeAboveRegular);

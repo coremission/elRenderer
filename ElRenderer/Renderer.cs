@@ -43,7 +43,7 @@ namespace ElRenderer
             // scale matrix
             Float3x3 S = Float3x3.identity * 50;
             // rotation matrix
-            Float3x3 R = Float3x3.getRotationMatrix(20, 0, 0);
+            Float3x3 R = Float3x3.getRotationMatrix(0, 0, 0);
 
             Float3x3 Combined = S * R;
 
