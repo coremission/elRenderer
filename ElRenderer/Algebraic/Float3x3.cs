@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Math;
 
 namespace ElRenderer.Model
 {
@@ -99,9 +100,11 @@ namespace ElRenderer.Model
         public static Float3x3 getRotationMatrix(float xAngle, float yAngle, float zAngle)
         {
             Float3x3 aboutX = new Float3x3(1, 0, 0,
-                                0, (float)Math.Cos(xAngle), (float)Math.Cos(xAngle),
-                                0, (float)(-Math.Sin(xAngle)), (float)Math.Cos(xAngle));
-            Float3x3 aboutY = Float3x3.identity;
+                                            0, (float)Cos(xAngle), (float)Sin(xAngle),
+                                            0, (float)(-Sin(xAngle)), (float)Cos(xAngle));
+            Float3x3 aboutY = new Float3x3((float)Cos(yAngle), 0, (float)(-Sin(yAngle)),
+                                           0, 1, 0,
+                                           (float)Sin(yAngle), 0, (float)Cos(yAngle));
             return aboutX * aboutY;
         }
 

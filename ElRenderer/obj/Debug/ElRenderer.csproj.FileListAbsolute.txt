@@ -1,0 +1,12 @@
+d:\!My\ElRenderer\ElRenderer\bin\Debug\ElRenderer.exe.config
+d:\!My\ElRenderer\ElRenderer\bin\Debug\ElRenderer.exe
+d:\!My\ElRenderer\ElRenderer\bin\Debug\ElRenderer.pdb
+d:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.csprojResolveAssemblyReference.cache
+d:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.Properties.Resources.resources
+d:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.csproj.GenerateResource.Cache
+d:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.exe
+d:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.pdb
+d:\!My\ElRenderer\ElRenderer\bin\Debug\3dModels\farmhouse.obj
+d:\!My\ElRenderer\ElRenderer\bin\Debug\3dModels\Goku SS2.obj
+d:\!My\ElRenderer\ElRenderer\bin\Debug\3dModels\Goku SS3.obj
+d:\!My\ElRenderer\ElRenderer\bin\Debug\3dModels\african_head.obj

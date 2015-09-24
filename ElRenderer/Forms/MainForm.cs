@@ -16,10 +16,11 @@ namespace ElRenderer
         private string appPath;
         private readonly Color BackgroundColor = Color.Black;
         private Renderer renderer;
+        private Mesh mesh;
 
         private void InitForm()
         {
-            this.ClientSize = new System.Drawing.Size(Defaults.WIDTH, Defaults.HEIGHT);
+            this.ClientSize = new Size(Defaults.WIDTH, Defaults.HEIGHT);
             this.FormBorderStyle = FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -36,42 +37,24 @@ namespace ElRenderer
 
             InitForm();
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
-            FillScreen(BackgroundColor);
-            
-            Mesh mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
 
-            renderer = new Renderer(BackgroundColor, new Float3(0, 1.5f, 0).normalize());
+            //mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
 
-            mesh = new Mesh();
+            Float3 whereLightComesFrom = new Float3(1f, 1f, 0);
+            renderer = new Renderer(screen, BackgroundColor, whereLightComesFrom);
 
-            mesh.Vertices = new List<Float3>(){
-                new Float3(1, 0, -1),
-                new Float3(1, 0, 1),
-                new Float3(1, 2, 1),
-                new Float3(1, 2, -1),
-                new Float3(-1, 2, -1),
-                new Float3(-1, 2, 1),
-                new Float3(-1, 0, 1),
-                new Float3(-1, 0, -1)
-            };
-            mesh.Triangles = new List<Triangle>(){
-                new Triangle(1, 2, 3), new Triangle(1, 3, 4),
-                new Triangle(1, 5, 8), new Triangle(1, 4, 5),
-                new Triangle(4, 3, 6), new Triangle(4, 6, 5), 
-                new Triangle(2, 6, 3), new Triangle(2, 7, 6),
-                new Triangle(1, 7, 2), new Triangle(1, 8, 7),
-                new Triangle(8, 5, 7), new Triangle(5, 6, 7),               
-            };
-
-            renderer.RenderTo(screen, mesh, RenderType.WireframeAboveRegular);
+            //mesh = getTestBox();
+            //renderer.RenderTo(mesh, RenderType.WireframeAboveRegular);
         }
 
-        private void FillScreen(Color color)
+        private void rotateMeshAroundY(Mesh mesh, float xAngle, float yAngle)
         {
-            for (int i = 0; i < Defaults.WIDTH; i++)
-                for(int j = 0; j < Defaults.HEIGHT; j++)
-                    screen.SetPixel(i, j, color);
-        }
+            // rotation matrix
+            Float3x3 R = Float3x3.getRotationMatrix(xAngle, yAngle, 0);
+
+            for (int i = 0; i < mesh.Vertices.Count; i++)
+                mesh.Vertices[i] = mesh.Vertices[i].mul(R);
+        }      
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -79,6 +62,35 @@ namespace ElRenderer
             e.Graphics.DrawImage(screen, 0, 0);
         }
 
+        private Mesh getTestBox()
+        {
+            Mesh result = new Mesh();
+
+            result.Vertices = new List<Float3>(){
+                    new Float3(1, -1, -1),
+                    new Float3(1, -1, 1),
+                    new Float3(1, 1, 1),
+                    new Float3(1, 1, -1),
+                    new Float3(-1, 1, -1),
+                    new Float3(-1, 1, 1),
+                    new Float3(-1, -1, 1),
+                    new Float3(-1, -1, -1)
+                };
+            result.Triangles = new List<Triangle>(){
+                    new Triangle(1, 2, 3, Color.Red), new Triangle(1, 3, 4, Color.Red),
+                    new Triangle(1, 5, 8, Color.Green), new Triangle(1, 4, 5, Color.Green),
+                    new Triangle(4, 3, 6, Color.White), new Triangle(4, 6, 5, Color.White),
+                    new Triangle(2, 6, 3, Color.Violet), new Triangle(2, 7, 6, Color.Violet),
+                    new Triangle(1, 7, 2, Color.Blue), new Triangle(1, 8, 7, Color.Blue),
+                    new Triangle(8, 5, 7, Color.Yellow), new Triangle(5, 6, 7, Color.Yellow),
+                };
+
+            return result;
+        }
+
+        private int yAngle = 0;
+        private int xAngle = 0;
+        private int delta = 3;
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -86,6 +98,25 @@ namespace ElRenderer
 
             if (e.KeyCode == Keys.S)
                 this.screen.Save(appPath + "screenshot.png", ImageFormat.Png);
+
+            if (e.KeyCode == Keys.A)
+            {
+                mesh = getTestBox();
+                yAngle = (yAngle + delta) % 360;
+                rotateMeshAroundY(mesh, xAngle, yAngle);
+                renderer.ResetZBuffer();
+                renderer.Render(mesh, RenderType.WireframeAboveRegular);
+                this.Refresh();
+            }
+            if (e.KeyCode == Keys.W)
+            {
+                mesh = getTestBox();
+                xAngle = (xAngle + delta) % 360;
+                rotateMeshAroundY(mesh, xAngle, yAngle);
+                renderer.ResetZBuffer();
+                renderer.Render(mesh, RenderType.WireframeAboveRegular);
+                this.Refresh();
+            }
         }
     }
 }

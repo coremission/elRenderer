@@ -13,35 +13,49 @@ namespace ElRenderer
     }
     public class Renderer
     {
-        private Float3 lightDirection;
+        private Bitmap bitmap;
+        private Float3 whereLightComesFrom;
+        private Color backGroundColor;
         private Fragment[,] zBuffer = new Fragment[Defaults.WIDTH, Defaults.HEIGHT];
         private Rasterizer rasterizer;
-        // Constructor
-        public Renderer(Color backGroundColor, Float3 normalizedLightDirection)
+
+        public void ResetZBuffer()
         {
-            this.lightDirection = normalizedLightDirection;
-
             for (int x = 0; x < Defaults.WIDTH; x++)
+            {
                 for (int y = 0; y < Defaults.HEIGHT; y++)
+                {
                     zBuffer[x, y] = new Fragment(backGroundColor);
+                    bitmap.SetPixel(x, y, backGroundColor);
+                }
+            }
 
-            rasterizer = new Rasterizer(zBuffer, lightDirection);
+            rasterizer = new Rasterizer(zBuffer, whereLightComesFrom);
         }
 
-        public void DrawTestTriangles(Bitmap screen)
+        // Constructor
+        public Renderer(Bitmap bitmap, Color backGroundColor, Float3 whereLightComesFrom)
+        {
+            this.bitmap = bitmap;
+            this.whereLightComesFrom = whereLightComesFrom;
+            this.backGroundColor = backGroundColor;
+            ResetZBuffer();
+        }
+
+        public void DrawTestTriangles(Bitmap bitmap)
         {
             Int2[] t0 = new[] { new Int2(10, 70), new Int2(50, 160), new Int2(70, 80) };
             Int2[] t1 = new[] { new Int2(180, 50), new Int2(150, 1), new Int2(70, 180) };
             Int2[] t2 = new[] { new Int2(180, 150), new Int2(120, 160), new Int2(130, 180) };
         }
 
-        public void RenderTo(Bitmap screen, Mesh mesh, RenderType renderType)
+        public void Render(Mesh mesh, RenderType renderType)
         {
             Color wireFrameColor = Color.LightGreen;
             // Vertex uniforms
 
             // scale matrix
-            Float3x3 S = Float3x3.identity * 50;
+            Float3x3 S = Float3x3.identity * 150;
             // rotation matrix
             Float3x3 R = Float3x3.getRotationMatrix(0, 0, 0);
 
@@ -57,30 +71,30 @@ namespace ElRenderer
             switch(renderType)
             {
                 case RenderType.Regular:
-                    RenderRegular(screen, mesh);
+                    RenderRegular(mesh);
                     return;
                 case RenderType.Wireframe:
-                    RenderWireframe(screen, mesh, wireFrameColor);
+                    RenderWireframe(mesh, wireFrameColor);
                     return;
                 case RenderType.WireframeAboveRegular:
-                    RenderRegular(screen, mesh);
-                    RenderWireframe(screen, mesh, wireFrameColor);
+                    RenderRegular(mesh);
+                    RenderWireframe(mesh, wireFrameColor);
                     return;
             }
             
         }
 
-        private void RenderRegular(Bitmap screen, Mesh mesh)
+        private void RenderRegular(Mesh mesh)
         {
             rasterizer.Rasterize(mesh);
 
             // FRAGMENT SHADER
             for (int x = 0; x < Defaults.WIDTH; x++)
                 for (int y = 0; y < Defaults.HEIGHT; y++)
-                    screen.elDrawPoint(x, y, zBuffer[x, y].color);
+                    bitmap.elDrawPoint(x, y, zBuffer[x, y].color);
         }
 
-        private void RenderWireframe(Bitmap screen, Mesh mesh, Color color)
+        private void RenderWireframe(Mesh mesh, Color color)
         {
             for (int i = 0; i < mesh.Triangles.Count; i++)
             {
@@ -90,19 +104,10 @@ namespace ElRenderer
                 Float3 v2 = mesh.Vertices[t[1] - 1];
                 Float3 v3 = mesh.Vertices[t[2] - 1];
 
-                screen.elDrawLine(v1.xy, v2.xy, color);
-                screen.elDrawLine(v2.xy, v3.xy, color);
-                screen.elDrawLine(v3.xy, v1.xy, color);
+                bitmap.elDrawLine(v1.xy, v2.xy, Color.Red);
+                bitmap.elDrawLine(v2.xy, v3.xy, Color.LightYellow);
+                bitmap.elDrawLine(v3.xy, v1.xy, color);
             }
-        }
-
-        private Color getRandomColor()
-        {
-            Random randomizer = new Random();
-            int r = randomizer.Next();
-            int g = randomizer.Next();
-            int b = randomizer.Next();
-            return Color.FromArgb(r % 255, g % 255, b % 255);
         }
     }
 }

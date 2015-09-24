@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Drawing;
-using System.Threading.Tasks;
 using ElRenderer.Model;
 
 namespace ElRenderer
 {
     public class Rasterizer
     {
-        private Float3 lightDirection;
+        private Float3 whereLightComesFrom;
         private Fragment[,] zBuffer;
                 
         // Contructor
-        public Rasterizer(Fragment[,] zBuffer, Float3 lightDirection)
+        public Rasterizer(Fragment[,] zBuffer, Float3 whereLightComesFrom)
         {
             this.zBuffer = zBuffer;
-            this.lightDirection = lightDirection;
+            this.whereLightComesFrom = whereLightComesFrom;
         }
 
         public void Rasterize(Mesh mesh)
@@ -30,15 +27,15 @@ namespace ElRenderer
                 Float3 v3 = mesh.Vertices[t[2] - 1];
                 Float3 normal = (v3 - v1).cross(v2 - v1).normalize();
 
-                int cc = (int)(255 * normal.dot(lightDirection.getOpposite()));
+                int cc = (int)(255 * normal.dot(whereLightComesFrom.normalize()));
 
                 // TODO: it is like backface culling
-                if (cc < 0)
-                    continue;
+                //if (cc < 0)
+                //    continue;
 
-                Color c = Color.FromArgb(cc, cc, cc);
+                Color c = Color.FromArgb(i * 10, i * 10, i * 10);
 
-                RenderTriangle2(v1, v2, v3, c);
+                RenderTriangle2(v1, v2, v3, t.color);
             }
         }
 
@@ -128,12 +125,21 @@ namespace ElRenderer
             if (x < 0 || y < 0 || x > Defaults.WIDTH - 1 || y > Defaults.HEIGHT - 1)
                 return;
 
-            // Z buffer test
-            if (zBuffer[x, y].z < z)
+            // Z buffer test (Z axis points towards viewer/camera)
+            if (zBuffer[x, y].z > z)
             {
                 zBuffer[x, y].color = c;
                 zBuffer[x, y].z = z;
             }
+        }
+
+        private Color getRandomColor()
+        {
+            Random randomizer = new Random();
+            int r = randomizer.Next();
+            int g = randomizer.Next();
+            int b = randomizer.Next();
+            return Color.FromArgb(r % 255, g % 255, b % 255);
         }
     }
 }

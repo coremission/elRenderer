@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace ElRenderer.Model
 {
@@ -10,7 +9,7 @@ namespace ElRenderer.Model
 
         public Fragment(Color color)
         {
-            this.z = float.NegativeInfinity;
+            this.z = float.PositiveInfinity;
             this.color = color;
         }
 

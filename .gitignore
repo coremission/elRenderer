@@ -2,4 +2,5 @@
 *.exe
 *.pdb
 ElRenderer/bin
-ElRenderer/obj
+ElRenderer/obj.vs
+.vs/*
