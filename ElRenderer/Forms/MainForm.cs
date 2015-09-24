@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ElRenderer.Service;
 using ElRenderer.Model;
+using System.Collections.Generic;
 
 namespace ElRenderer
 {
@@ -37,10 +38,29 @@ namespace ElRenderer
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
             FillScreen(BackgroundColor);
             
-            Mesh mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\Goku SS2.obj");
+            Mesh mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
 
-            renderer = new Renderer(BackgroundColor);
-            renderer.RenderTo(screen, mesh);
+            renderer = new Renderer(BackgroundColor, new Float3(0, 1.5f, 0).normalize());
+
+            mesh = new Mesh();
+
+            mesh.Vertices = new List<Float3>(){
+                new Float3(1, 0, -1),
+                new Float3(1, 0, 1),
+                new Float3(1, 2, 1),
+                new Float3(1, 2, -1),
+                new Float3(-1, 2, -1),
+                new Float3(-1, 2, 1),
+                new Float3(-1, 0, 1),
+                new Float3(-1, 0, -1)
+            };
+            mesh.Triangles = new List<Triangle>(){
+                new Triangle(1, 2, 3), new Triangle(1, 3, 4),
+                new Triangle(1, 8, 5), new Triangle(1, 5, 4),
+                new Triangle(4, 3, 6), new Triangle(4, 6, 5),                
+            };
+
+            renderer.RenderTo(screen, mesh, RenderType.WireframeAboveRegular);
         }
 
         private void FillScreen(Color color)

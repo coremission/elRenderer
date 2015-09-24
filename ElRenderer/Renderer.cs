@@ -4,17 +4,26 @@ using ElRenderer.Model;
 
 namespace ElRenderer
 {
+    public enum RenderType
+    {
+        Regular,
+        Wireframe,
+        WireframeAboveRegular,
+        Points
+    }
     public class Renderer
     {
-        private Float3 lightDirection = new Float3(0, -1, 0).normalize();
-        private Fragment[,] zBuffer = new Fragment[Defaults.HEIGHT, Defaults.WIDTH];
+        private Float3 lightDirection;
+        private Fragment[,] zBuffer = new Fragment[Defaults.WIDTH, Defaults.HEIGHT];
         private Rasterizer rasterizer;
         // Constructor
-        public Renderer(Color backGroundColor)
+        public Renderer(Color backGroundColor, Float3 normalizedLightDirection)
         {
-            for (int y = 0; y < Defaults.HEIGHT; y++)
-                for (int x = 0; x < Defaults.WIDTH; x++)
-                    zBuffer[y, x] = new Fragment(backGroundColor);
+            this.lightDirection = normalizedLightDirection;
+
+            for (int x = 0; x < Defaults.WIDTH; x++)
+                for (int y = 0; y < Defaults.HEIGHT; y++)
+                    zBuffer[x, y] = new Fragment(backGroundColor);
 
             rasterizer = new Rasterizer(zBuffer, lightDirection);
         }
@@ -26,14 +35,15 @@ namespace ElRenderer
             Int2[] t2 = new[] { new Int2(180, 150), new Int2(120, 160), new Int2(130, 180) };
         }
 
-        public void RenderTo(Bitmap screen, Mesh mesh)
+        public void RenderTo(Bitmap screen, Mesh mesh, RenderType renderType)
         {
+            Color wireFrameColor = Color.LightGreen;
             // Vertex uniforms
 
             // scale matrix
-            Float3x3 S = Float3x3.identity * 30;
+            Float3x3 S = Float3x3.identity * 50;
             // rotation matrix
-            Float3x3 R = Float3x3.getRotationMatrix(0, 0, 0);
+            Float3x3 R = Float3x3.getRotationMatrix(20, 0, 0);
 
             Float3x3 Combined = S * R;
 
@@ -44,12 +54,46 @@ namespace ElRenderer
                 mesh.Vertices[i] = new Float3(v.x + Defaults.WIDTH / 2, v.y + Defaults.HEIGHT / 2, v.z);
             }
 
+            switch(renderType)
+            {
+                case RenderType.Regular:
+                    RenderRegular(screen, mesh);
+                    return;
+                case RenderType.Wireframe:
+                    RenderWireframe(screen, mesh, wireFrameColor);
+                    return;
+                case RenderType.WireframeAboveRegular:
+                    RenderRegular(screen, mesh);
+                    RenderWireframe(screen, mesh, wireFrameColor);
+                    return;
+            }
+            
+        }
+
+        private void RenderRegular(Bitmap screen, Mesh mesh)
+        {
             rasterizer.Rasterize(mesh);
 
             // FRAGMENT SHADER
-            for (int x = 0; x < Defaults.HEIGHT; x++)
-                for (int y = 0; y < Defaults.WIDTH; y++)
+            for (int x = 0; x < Defaults.WIDTH; x++)
+                for (int y = 0; y < Defaults.HEIGHT; y++)
                     screen.elDrawPoint(x, y, zBuffer[x, y].color);
+        }
+
+        private void RenderWireframe(Bitmap screen, Mesh mesh, Color color)
+        {
+            for (int i = 0; i < mesh.Triangles.Count; i++)
+            {
+                Triangle t = mesh.Triangles[i];
+
+                Float3 v1 = mesh.Vertices[t[0] - 1];
+                Float3 v2 = mesh.Vertices[t[1] - 1];
+                Float3 v3 = mesh.Vertices[t[2] - 1];
+
+                screen.elDrawLine(v1.xy, v2.xy, color);
+                screen.elDrawLine(v2.xy, v3.xy, color);
+                screen.elDrawLine(v3.xy, v1.xy, color);
+            }
         }
 
         private Color getRandomColor()

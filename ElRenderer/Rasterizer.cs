@@ -21,9 +21,7 @@ namespace ElRenderer
 
         public void Rasterize(Mesh mesh)
         {
-            int trianglesCount = mesh.Triangles.Count;
-
-            for (int i = 0; i < trianglesCount; i++)
+            for (int i = 0; i < mesh.Triangles.Count; i++)
             {
                 Triangle t = mesh.Triangles[i];
 
@@ -131,10 +129,10 @@ namespace ElRenderer
                 return;
 
             // Z buffer test
-            if (zBuffer[y, x].z < z)
+            if (zBuffer[x, y].z < z)
             {
-                zBuffer[y, x].color = c;
-                zBuffer[y, x].z = z;
+                zBuffer[x, y].color = c;
+                zBuffer[x, y].z = z;
             }
         }
     }
