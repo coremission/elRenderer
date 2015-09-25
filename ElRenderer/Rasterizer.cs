@@ -126,7 +126,7 @@ namespace ElRenderer
                 return;
 
             // Z buffer test (Z axis points towards viewer/camera)
-            if (zBuffer[x, y].z > z)
+            if (true)//(zBuffer[x, y].z > z)
             {
                 zBuffer[x, y].color = c;
                 zBuffer[x, y].z = z;
