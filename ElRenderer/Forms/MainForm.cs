@@ -17,6 +17,11 @@ namespace ElRenderer
         private readonly Color BackgroundColor = Color.Black;
         private Renderer renderer;
         private Mesh mesh;
+        private Float3 viewDirection = new Float3(0, 0, 1).normalize();
+
+        private int yAngle = 0;
+        private int xAngle = 0;
+        private int delta = 3;
 
         private void InitForm()
         {
@@ -45,6 +50,10 @@ namespace ElRenderer
 
             //mesh = getTestBox();
             //renderer.RenderTo(mesh, RenderType.WireframeAboveRegular);
+            mesh = getTestBox();
+            rotateMeshAroundY(mesh, 10, 20);
+            renderer.ResetZBuffer();
+            renderer.Render(mesh, RenderType.WireframeAboveRegular, viewDirection);
         }
 
         private void rotateMeshAroundY(Mesh mesh, float xAngle, float yAngle)
@@ -67,30 +76,27 @@ namespace ElRenderer
             Mesh result = new Mesh();
 
             result.Vertices = new List<Float3>(){
-                    new Float3(1, -1, -1),
-                    new Float3(1, -1, 1),
-                    new Float3(1, 1, 1),
-                    new Float3(1, 1, -1),
-                    new Float3(-1, 1, -1),
-                    new Float3(-1, 1, 1),
-                    new Float3(-1, -1, 1),
-                    new Float3(-1, -1, -1)
+                    new Float3(1, -1, -1),  // 1
+                    new Float3(1, -1, 1),   // 2
+                    new Float3(1, 1, 1),    // 3
+                    new Float3(1, 1, -1),   // 4
+                    new Float3(-1, 1, -1),  // 5
+                    new Float3(-1, 1, 1),   // 6
+                    new Float3(-1, -1, 1),  // 7
+                    new Float3(-1, -1, -1)  // 8
                 };
             result.Triangles = new List<Triangle>(){
-                    new Triangle(1, 2, 3, Color.Red), new Triangle(1, 3, 4, Color.Red),
-                    new Triangle(1, 5, 8, Color.Green), new Triangle(1, 4, 5, Color.Green),
-                    new Triangle(4, 3, 6, Color.White), new Triangle(4, 6, 5, Color.White),
-                    new Triangle(2, 6, 3, Color.Violet), new Triangle(2, 7, 6, Color.Violet),
-                    new Triangle(1, 7, 2, Color.Blue), new Triangle(1, 8, 7, Color.Blue),
-                    new Triangle(8, 5, 7, Color.Yellow), new Triangle(5, 6, 7, Color.Yellow),
+                    new Triangle(1, 2, 3, Color.Red), new Triangle(1, 3, 4, Color.Red), // right
+                    new Triangle(1, 5, 8, Color.Green), new Triangle(1, 4, 5, Color.Green), // front or back
+                    new Triangle(4, 3, 6, Color.White), new Triangle(4, 6, 5, Color.FloralWhite),
+                    new Triangle(2, 6, 3, Color.DarkViolet), new Triangle(2, 7, 6, Color.Violet), // front or back
+                    new Triangle(1, 7, 2, Color.Blue), new Triangle(1, 8, 7, Color.BlueViolet),
+                    new Triangle(8, 5, 7, Color.YellowGreen), new Triangle(5, 6, 7, Color.Yellow), // left
                 };
 
             return result;
         }
 
-        private int yAngle = 0;
-        private int xAngle = 0;
-        private int delta = 3;
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -105,7 +111,7 @@ namespace ElRenderer
                 yAngle = (yAngle + delta) % 360;
                 rotateMeshAroundY(mesh, xAngle, yAngle);
                 renderer.ResetZBuffer();
-                renderer.Render(mesh, RenderType.WireframeAboveRegular);
+                renderer.Render(mesh, RenderType.WireframeAboveRegular, viewDirection);
                 this.Refresh();
             }
             if (e.KeyCode == Keys.W)
@@ -114,7 +120,7 @@ namespace ElRenderer
                 xAngle = (xAngle + delta) % 360;
                 rotateMeshAroundY(mesh, xAngle, yAngle);
                 renderer.ResetZBuffer();
-                renderer.Render(mesh, RenderType.WireframeAboveRegular);
+                renderer.Render(mesh, RenderType.WireframeAboveRegular, viewDirection);
                 this.Refresh();
             }
         }

@@ -30,12 +30,12 @@ namespace ElRenderer
                 int cc = (int)(255 * normal.dot(whereLightComesFrom.normalize()));
 
                 // TODO: it is like backface culling
-                //if (cc < 0)
-                //    continue;
+                if (cc < 0)
+                    continue;
 
-                Color c = Color.FromArgb(i * 10, i * 10, i * 10);
+                Color c = Color.FromArgb(cc, cc, cc);
 
-                RenderTriangle2(v1, v2, v3, t.color);
+                RenderTriangle2(v1, v2, v3, c);
             }
         }
 

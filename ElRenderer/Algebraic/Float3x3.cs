@@ -99,6 +99,10 @@ namespace ElRenderer.Model
 
         public static Float3x3 getRotationMatrix(float xAngle, float yAngle, float zAngle)
         {
+            xAngle *= ((float)Math.PI / 180.0f);
+            yAngle *= ((float)Math.PI / 180.0f);
+            zAngle *= ((float)Math.PI / 180.0f);
+
             Float3x3 aboutX = new Float3x3(1, 0, 0,
                                             0, (float)Cos(xAngle), (float)Sin(xAngle),
                                             0, (float)(-Sin(xAngle)), (float)Cos(xAngle));

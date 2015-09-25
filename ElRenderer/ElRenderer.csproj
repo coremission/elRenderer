@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algebraic\Float4.cs" />
+    <Compile Include="Algebraic\Float4x4.cs" />
     <Compile Include="Algebraic\Int3.cs" />
     <Compile Include="BitmapExtensions.cs" />
     <Compile Include="Defaults.cs" />

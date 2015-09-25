@@ -14,7 +14,9 @@ namespace ElRenderer
     public class Renderer
     {
         private Bitmap bitmap;
+        
         private Float3 whereLightComesFrom;
+
         private Color backGroundColor;
         private Fragment[,] zBuffer = new Fragment[Defaults.WIDTH, Defaults.HEIGHT];
         private Rasterizer rasterizer;
@@ -49,7 +51,13 @@ namespace ElRenderer
             Int2[] t2 = new[] { new Int2(180, 150), new Int2(120, 160), new Int2(130, 180) };
         }
 
-        public void Render(Mesh mesh, RenderType renderType)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <param name="renderType"></param>
+        /// <param name="viewDirection">Normal Vector from viewer's eye</param>
+        public void Render(Mesh mesh, RenderType renderType, Float3 viewDirection)
         {
             Color wireFrameColor = Color.LightGreen;
             // Vertex uniforms
@@ -60,6 +68,21 @@ namespace ElRenderer
             Float3x3 R = Float3x3.getRotationMatrix(0, 0, 0);
 
             Float3x3 Combined = S * R;
+
+            // BACK FACE CULLING
+            for (int i = mesh.Triangles.Count - 1; i > 0; i--)
+            {
+                Triangle t = mesh.Triangles[i];
+
+                Float3 v1 = mesh.Vertices[t[0] - 1];
+                Float3 v2 = mesh.Vertices[t[1] - 1];
+                Float3 v3 = mesh.Vertices[t[2] - 1];
+                Float3 normal = (v3 - v1).cross(v2 - v1).normalize();
+
+                // remove faced back triangles
+                if (viewDirection.dot(normal) >= 0)
+                    mesh.Triangles.Remove(t);
+            }
 
             // VERTEX SHADER
             for (int i = 0; i < mesh.Vertices.Count; i++)
