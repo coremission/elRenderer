@@ -70,14 +70,14 @@ namespace ElRenderer
             Float3x3 Combined = S * R;
 
             // BACK FACE CULLING
-            for (int i = mesh.Triangles.Count - 1; i > 0; i--)
+            for (int i = mesh.Triangles.Count - 1; i >= 0; i--)
             {
                 Triangle t = mesh.Triangles[i];
 
                 Float3 v1 = mesh.Vertices[t[0] - 1];
                 Float3 v2 = mesh.Vertices[t[1] - 1];
                 Float3 v3 = mesh.Vertices[t[2] - 1];
-                Float3 normal = (v3 - v1).cross(v2 - v1).normalize();
+                Float3 normal = Utils.getTriangleNormal(v1, v2, v3);
 
                 // remove faced back triangles
                 if (viewDirection.dot(normal) >= 0)

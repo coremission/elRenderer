@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using ElRenderer.Model;
 
 namespace ElRenderer
@@ -128,6 +124,11 @@ namespace ElRenderer
             float a3 = (t1.y + t3.y) * (t1.x - t3.x) / 2.0f;
 
             return a1 + a2 + a3;
+        }
+
+        public static Float3 getTriangleNormal(Float3 v1, Float3 v2, Float3 v3)
+        {
+            return (v2 - v1).cross(v3 - v1).normalize();
         }
     }
 }

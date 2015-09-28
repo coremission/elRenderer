@@ -25,7 +25,7 @@ namespace ElRenderer
                 Float3 v1 = mesh.Vertices[t[0] - 1];
                 Float3 v2 = mesh.Vertices[t[1] - 1];
                 Float3 v3 = mesh.Vertices[t[2] - 1];
-                Float3 normal = (v3 - v1).cross(v2 - v1).normalize();
+                Float3 normal = Utils.getTriangleNormal(v1, v2, v3);
 
                 int cc = (int)(255 * normal.dot(whereLightComesFrom.normalize()));
 
@@ -35,7 +35,7 @@ namespace ElRenderer
 
                 Color c = Color.FromArgb(cc, cc, cc);
 
-                RenderTriangle2(v1, v2, v3, c);
+                RenderTriangle2(v1, v2, v3, t.color);
             }
         }
 
@@ -93,7 +93,7 @@ namespace ElRenderer
                 for (int x = min(A.x, B.x); x <= max(A.x, B.x); x++)
                 {
                     // check extremes
-                    float delta = (A.x == B.x) ? 1.0f : (float)(x - A.x) / (float)(A.x - B.x);
+                    float delta = (A.x == B.x) ? 1.0f : (float)(x - A.x) / (float)Math.Abs(A.x - B.x);
                     Int3 C = Int3.lerp(A, B, delta);
 
                     DrawPointToFrameBuffer(x, y, C.z, color);
@@ -111,7 +111,7 @@ namespace ElRenderer
                 for (int x = min(A.x, B.x); x <= max(A.x, B.x); x++)
                 {
                     // check extremes
-                    float delta = (A.x == B.x) ? 1.0f : (float)(x - A.x) / (float)(A.x - B.x);
+                    float delta = (A.x == B.x) ? 1.0f : (float)(x - A.x) / (float)Math.Abs(A.x - B.x);
                     Int3 C = Int3.lerp(A, B, delta);
 
                     DrawPointToFrameBuffer(x, y, C.z, color);
@@ -125,8 +125,13 @@ namespace ElRenderer
             if (x < 0 || y < 0 || x > Defaults.WIDTH - 1 || y > Defaults.HEIGHT - 1)
                 return;
 
-            // Z buffer test (Z axis points towards viewer/camera)
-            if (true)//(zBuffer[x, y].z > z)
+            
+            if(zBuffer[x, y].z < float.PositiveInfinity)
+            {
+                ;
+            }
+            // Z buffer test (Z axis points away from viewer/camera)
+            if (z < zBuffer[x, y].z)
             {
                 zBuffer[x, y].color = c;
                 zBuffer[x, y].z = z;
