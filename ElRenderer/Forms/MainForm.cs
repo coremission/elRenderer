@@ -50,7 +50,7 @@ namespace ElRenderer
 
             //mesh = getTestBox();
             //rotateMeshAroundXY(mesh, 0, -100);
-            mesh = getOneAboveTheOverTriangle();
+            mesh = getOverlappedTriangles();
             renderer.Render(mesh, RenderType.Regular, viewDirection);
         }
 
@@ -88,9 +88,9 @@ namespace ElRenderer
             Mesh result = new Mesh();
 
             result.Vertices = new List<Float3>(){
-                new Float3( 2,  0,  1),
-                new Float3(-1, -1, -1),
-                new Float3(-1,  1, -1),
+                new Float3( 2,  0, -1),
+                new Float3(-1, -1,  1),
+                new Float3(-1,  1,  1),
 
                 new Float3(-2,  0, -1),
                 new Float3( 1,  1,  1),

@@ -145,7 +145,8 @@ namespace ElRenderer
             // Z buffer test (Z axis points away from viewer/camera)
             if (z < zBuffer[x, y].z)
             {
-                zBuffer[x, y].color = c;
+                int cc = (int)(((float)(z + 150.0)/(float)300.0 ) * 255);
+                zBuffer[x, y].color = c;// Color.FromArgb(cc, cc, cc);
                 zBuffer[x, y].z = z;
             }
         }
