@@ -20,6 +20,7 @@ namespace ElRenderer
         private Color backGroundColor;
         private Fragment[,] zBuffer = new Fragment[Defaults.WIDTH, Defaults.HEIGHT];
         private Rasterizer rasterizer;
+        private bool backFaceCulling = false;
 
         public void ResetZBuffer()
         {
@@ -63,32 +64,35 @@ namespace ElRenderer
             // Vertex uniforms
 
             // scale matrix
-            Float3x3 S = Float3x3.identity * 150;
+            Float3x3 S = Float3x3.identity * 300;
             // rotation matrix
-            Float3x3 R = Float3x3.getRotationMatrix(0, 0, 0);
+            Float3x3 R = Float3x3.getRotationMatrix(0, 180, 0);
 
             Float3x3 Combined = S * R;
 
             // BACK FACE CULLING
-            for (int i = mesh.Triangles.Count - 1; i >= 0; i--)
+            if (backFaceCulling)
             {
-                Triangle t = mesh.Triangles[i];
+                for (int i = mesh.Triangles.Count - 1; i >= 0; i--)
+                {
+                    Triangle t = mesh.Triangles[i];
 
-                Float3 v1 = mesh.Vertices[t[0] - 1];
-                Float3 v2 = mesh.Vertices[t[1] - 1];
-                Float3 v3 = mesh.Vertices[t[2] - 1];
-                Float3 normal = Utils.getTriangleNormal(v1, v2, v3);
+                    Float3 v1 = mesh.Vertices[t[0] - 1].position;
+                    Float3 v2 = mesh.Vertices[t[1] - 1].position;
+                    Float3 v3 = mesh.Vertices[t[2] - 1].position;
+                    Float3 normal = Utils.getTriangleNormalR(v1, v2, v3);
 
-                // remove faced back triangles
-                if (viewDirection.dot(normal) >= 0)
-                    mesh.Triangles.Remove(t);
+                    // remove faced back triangles
+                    if (viewDirection.dot(normal) >= 0)
+                        mesh.Triangles.Remove(t);
+                }
             }
-
             // VERTEX SHADER
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {
-                Float3 v = mesh.Vertices[i].mul(Combined);
-                mesh.Vertices[i] = new Float3(v.x + Defaults.WIDTH / 2, v.y + Defaults.HEIGHT / 2, v.z);
+                Vertex v = mesh.Vertices[i];
+                Float3 p = v.position.mul(Combined);
+                v.position = new Float3(p.x + Defaults.WIDTH / 2, p.y + Defaults.HEIGHT / 2, p.z);
             }
 
             switch(renderType)
@@ -123,9 +127,9 @@ namespace ElRenderer
             {
                 Triangle t = mesh.Triangles[i];
 
-                Float3 v1 = mesh.Vertices[t[0] - 1];
-                Float3 v2 = mesh.Vertices[t[1] - 1];
-                Float3 v3 = mesh.Vertices[t[2] - 1];
+                Float3 v1 = mesh.Vertices[t[0] - 1].position;
+                Float3 v2 = mesh.Vertices[t[1] - 1].position;
+                Float3 v3 = mesh.Vertices[t[2] - 1].position;
 
                 bitmap.elDrawLine(v1.xy, v2.xy, Color.Red);
                 bitmap.elDrawLine(v2.xy, v3.xy, Color.LightYellow);

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using ElRenderer.Model;
 
 namespace ElRenderer.Service
@@ -22,10 +19,13 @@ namespace ElRenderer.Service
                 
                 if (lineParts[0] == "v")
                 {
-                    Float3 v = new Float3(float.Parse(lineParts[1], System.Globalization.CultureInfo.InvariantCulture),
-                        float.Parse(lineParts[2], System.Globalization.CultureInfo.InvariantCulture),
-                        float.Parse(lineParts[3], System.Globalization.CultureInfo.InvariantCulture));
-                    result.Vertices.Add(v);
+                    Float3 position = new Float3(float.Parse(lineParts[1], System.Globalization.CultureInfo.InvariantCulture),
+                                                 float.Parse(lineParts[2], System.Globalization.CultureInfo.InvariantCulture),
+                                                 float.Parse(lineParts[3], System.Globalization.CultureInfo.InvariantCulture)
+                                                 );
+
+                    Vertex vertex = new Vertex (position);
+                    result.Vertices.Add(vertex);
                 }
                 if (lineParts[0] == "f")
                 {

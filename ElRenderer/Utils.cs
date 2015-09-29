@@ -1,10 +1,51 @@
 ﻿using System.Linq;
 using ElRenderer.Model;
+using System;
+using System.Drawing;
 
 namespace ElRenderer
 {
     public static class Utils
     {
+        #region Helper
+        public static void swap<T>(ref T a, ref T b)
+        {
+            T buffer = a;
+            a = b;
+            b = buffer;
+        }
+
+        public static int _int(float f)
+        {
+            return (int)(f + 0.5f);
+        }
+
+        public static int lerp(int start, int end, float delta)
+        {
+            return (int)(start + (end - start) * delta + 0.5f);
+        }
+
+        public static T min<T>(T a, T b) where T : IComparable<T>
+        {
+            return a.CompareTo(b) <= 0 ? a : b;
+        }
+
+        public static T max<T>(T a, T b) where T : IComparable<T>
+        {
+            return a.CompareTo(b) >= 0 ? a : b;
+        }
+
+        #endregion
+
+        public static Color getRandomColor()
+        {
+            Random randomizer = new Random();
+            int r = randomizer.Next();
+            int g = randomizer.Next();
+            int b = randomizer.Next();
+            return Color.FromArgb(r % 255, g % 255, b % 255);
+        }
+
         public static Box3d? getBoundingBox(params Float3[] points)
         {
             if (points.Length < 2)
@@ -124,6 +165,11 @@ namespace ElRenderer
             float a3 = (t1.y + t3.y) * (t1.x - t3.x) / 2.0f;
 
             return a1 + a2 + a3;
+        }
+
+        public static Float3 getTriangleNormalR(Float3 v1, Float3 v2, Float3 v3)
+        {
+            return (v3 - v1).cross(v2 - v1).normalize();
         }
 
         public static Float3 getTriangleNormal(Float3 v1, Float3 v2, Float3 v3)
