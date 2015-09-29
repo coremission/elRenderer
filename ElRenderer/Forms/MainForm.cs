@@ -43,17 +43,18 @@ namespace ElRenderer
             InitForm();
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
 
-            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
+            //mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
 
             Float3 whereLightComesFrom = new Float3(1f, 1f, -1f);
             renderer = new Renderer(screen, BackgroundColor, whereLightComesFrom);
 
             //mesh = getTestBox();
-            //mesh = getOverlappedTriangles();
+            //rotateMeshAroundXY(mesh, 0, -100);
+            mesh = getOneAboveTheOverTriangle();
             renderer.Render(mesh, RenderType.Regular, viewDirection);
         }
 
-        private void rotateMeshAroundY(Mesh mesh, float xAngle, float yAngle)
+        private void rotateMeshAroundXY(Mesh mesh, float xAngle, float yAngle)
         {
             // rotation matrix
             Float3x3 R = Float3x3.getRotationMatrix(xAngle, yAngle, 0);
@@ -91,9 +92,29 @@ namespace ElRenderer
                 new Float3(-1, -1, -1),
                 new Float3(-1,  1, -1),
 
-                new Float3(-2,  0, -2),
+                new Float3(-2,  0, -1),
                 new Float3( 1,  1,  1),
                 new Float3( 1, -1,  1),
+            };
+            result.Triangles = new List<Triangle>() {
+                new Triangle(1, 2, 3, Color.Red),
+                new Triangle(4, 5, 6, Color.Green),
+            };
+
+            return result;
+        }
+
+        private Mesh getOneAboveTheOverTriangle()
+        {
+            Mesh result = new Mesh();
+
+            result.Vertices = new List<Float3>(){
+                new Float3( 2,  0,  -1),
+                new Float3(-1, -1,  -1),
+                new Float3(-1,  1,  -1),
+                new Float3( 2,  0,  0),
+                new Float3(-1, -1,  0),
+                new Float3(-1,  1,  0),
             };
             result.Triangles = new List<Triangle>() {
                 new Triangle(1, 2, 3, Color.Red),
@@ -141,7 +162,7 @@ namespace ElRenderer
             {
                 mesh = getTestBox();
                 yAngle = (yAngle + delta) % 360;
-                rotateMeshAroundY(mesh, xAngle, yAngle);
+                rotateMeshAroundXY(mesh, xAngle, yAngle);
                 renderer.ResetZBuffer();
                 renderer.Render(mesh, RenderType.WireframeAboveRegular, viewDirection);
                 this.Refresh();
@@ -150,7 +171,7 @@ namespace ElRenderer
             {
                 mesh = getTestBox();
                 xAngle = (xAngle + delta) % 360;
-                rotateMeshAroundY(mesh, xAngle, yAngle);
+                rotateMeshAroundXY(mesh, xAngle, yAngle);
                 renderer.ResetZBuffer();
                 renderer.Render(mesh, RenderType.WireframeAboveRegular, viewDirection);
                 this.Refresh();

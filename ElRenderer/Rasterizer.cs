@@ -90,15 +90,22 @@ namespace ElRenderer
                 Int3 A = Int3.lerp(v1, v3, alpha);
                 Int3 B = Int3.lerp(v1, v2, beta);
 
-                for (int x = min(A.x, B.x); x <= max(A.x, B.x); x++)
+                if (A.x > B.x)
+                    swap(ref A, ref B);
+                for (int x = A.x; x <= B.x; x++)
                 {
                     // check extremes
-                    float delta = (A.x == B.x) ? 1.0f : (float)(x - A.x) / (float)Math.Abs(A.x - B.x);
+                    float delta = (A.x == B.x) ? 1.0f : (float)(x - A.x) / (float)(B.x - A.x);
+
+                    if (delta < 0 || delta > 1)
+                        throw new ArgumentException("delta < 0");
+                
                     Int3 C = Int3.lerp(A, B, delta);
 
                     DrawPointToFrameBuffer(x, y, C.z, color);
                 }
             }
+            return;
             segmentHeight = v3.y - v2.y + 1;
             for (int y = v2.y; y <= v3.y; y++)
             {
@@ -125,7 +132,12 @@ namespace ElRenderer
             if (x < 0 || y < 0 || x > Defaults.WIDTH - 1 || y > Defaults.HEIGHT - 1)
                 return;
 
-            
+            float bZ = zBuffer[x, y].z;
+
+            if(z < bZ && bZ < float.PositiveInfinity)
+            {
+                ;
+            }
             if(zBuffer[x, y].z < float.PositiveInfinity)
             {
                 ;
