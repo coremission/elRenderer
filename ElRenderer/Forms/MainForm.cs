@@ -1,12 +1,8 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ElRenderer.Service;
 using ElRenderer.Model;
-using System.Collections.Generic;
 
 namespace ElRenderer
 {
@@ -18,7 +14,7 @@ namespace ElRenderer
         private Renderer renderer;
         private Mesh mesh;
         private Float3 viewDirection = new Float3(0, 0, 1).normalize();
-        private Float3 whereLightComesFrom = new Float3(1f, 1f, -1f);
+        private Float3 whereLightComesFrom = new Float3(0f, 0f, -1f);
 
         private int yAngle = 0;
         private int xAngle = 0;
@@ -45,10 +41,11 @@ namespace ElRenderer
             renderer = new Renderer(screen, BackgroundColor, whereLightComesFrom);
 
             mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
-            mesh.RecalculateNormals();
-            //mesh = Test_Data.getOverlappedTriangles();
 
-            renderer.Render(mesh, RenderType.Regular, viewDirection);
+            //mesh = Test_Data.getOverlappedTriangles();
+            RenderType renderType = RenderType.Regular;
+
+            renderer.Render(mesh, renderType, viewDirection);
         }
 
         private void rotateMeshAroundXY(Mesh mesh, float xAngle, float yAngle)

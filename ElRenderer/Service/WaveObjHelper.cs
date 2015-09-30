@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using ElRenderer.Model;
+using System.Collections.Generic;
 
 namespace ElRenderer.Service
 {
@@ -9,6 +10,9 @@ namespace ElRenderer.Service
         {
             Mesh result = new Mesh();
             string[] lines = File.ReadAllLines(filePath);
+
+            List<Float3> normals = new List<Float3>();
+            List<Float3> vPositions = new List<Float3>();
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -24,8 +28,15 @@ namespace ElRenderer.Service
                                                  float.Parse(lineParts[3], System.Globalization.CultureInfo.InvariantCulture)
                                                  );
 
-                    Vertex vertex = new Vertex (position);
-                    result.Vertices.Add(vertex);
+                    vPositions.Add(position);
+                }
+                if (lineParts[0] == "vn")
+                {
+                    Float3 normal = new Float3(float.Parse(lineParts[1], System.Globalization.CultureInfo.InvariantCulture),
+                                                float.Parse(lineParts[2], System.Globalization.CultureInfo.InvariantCulture),
+                                                float.Parse(lineParts[3], System.Globalization.CultureInfo.InvariantCulture)
+                                                );
+                    normals.Add(normal);
                 }
                 if (lineParts[0] == "f")
                 {
@@ -37,6 +48,11 @@ namespace ElRenderer.Service
                 }
             }
             
+            for(int i = 0; i < vPositions.Count; i++)
+            {
+                result.Vertices.Add(new Vertex(vPositions[i]) { normal = normals[i].getOpposite().normalize() });
+            }
+
             return result;
         }
 

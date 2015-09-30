@@ -15,7 +15,7 @@ namespace ElRenderer.Model
         public Vertex(Float3 position)
         {
             this.position = position;
-            this.normal = new Float3(0, 0, 0);
+            this.normal = Float3.zero;
             this.color = Color.White;
             this.uv = new Float2(0, 0);
         }

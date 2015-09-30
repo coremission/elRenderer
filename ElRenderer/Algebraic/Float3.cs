@@ -20,6 +20,22 @@ namespace ElRenderer.Model
             this.z = z;
         }
 
+        public static Float3 identity
+        {
+            get
+            {
+                return new Float3(1, 1, 1);
+            }
+        }
+
+        public static Float3 zero
+        {
+            get
+            {
+                return new Float3(0, 0, 0);
+            }
+        }
+
         public float[] ToFloatArray()
         {
             return new float[]{ x, y, z };
@@ -52,6 +68,18 @@ namespace ElRenderer.Model
         public static Float3 operator *(float scalar, Float3 M)
         {
             return M * scalar;
+        }
+
+        public static bool operator ==(Float3 a, Float3 b)
+        {
+            return (float.Equals(a.x, b.x) &&
+                    float.Equals(a.y, b.y) &&
+                    float.Equals(a.z, b.z));
+        }
+
+        public static bool operator !=(Float3 a, Float3 b)
+        {
+            return !(a == b);
         }
 
         public float dot(Float3 other)
@@ -93,7 +121,7 @@ namespace ElRenderer.Model
             return new Float3(-x, -y, -z);
         }
 
-        public Float3 lerp(Float3 start, Float3 end, float delta)
+        public static Float3 lerp(Float3 start, Float3 end, float delta)
         {
             return start + (end - start) * delta;
         }

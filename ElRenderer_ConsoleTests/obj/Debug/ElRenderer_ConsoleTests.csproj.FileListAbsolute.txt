@@ -17,3 +17,4 @@ d:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\3dModels\farmhouse.obj
 d:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\3dModels\Goku SS2.obj
 d:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\3dModels\Goku SS3.obj
 d:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\3dModels\african_head.obj
+d:\!My\ElRenderer\ElRenderer_ConsoleTests\bin\Debug\3dModels\african_head_diffuse.tga

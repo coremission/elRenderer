@@ -4,13 +4,14 @@ using ElRenderer.Model;
 
 namespace ElRenderer
 {
+    [Flags]
     public enum RenderType
     {
-        Regular,
-        Wireframe,
-        WireframeAboveRegular,
-        Points
+        Regular = 1,
+        Wireframe = 2,
+        Normals = 4,
     }
+
     public class Renderer
     {
         private Bitmap bitmap;
@@ -95,20 +96,14 @@ namespace ElRenderer
                 v.position = new Float3(p.x + Defaults.WIDTH / 2, p.y + Defaults.HEIGHT / 2, p.z);
             }
 
-            switch(renderType)
-            {
-                case RenderType.Regular:
-                    RenderRegular(mesh);
-                    return;
-                case RenderType.Wireframe:
-                    RenderWireframe(mesh, wireFrameColor);
-                    return;
-                case RenderType.WireframeAboveRegular:
-                    RenderRegular(mesh);
-                    RenderWireframe(mesh, wireFrameColor);
-                    return;
-            }
-            
+            if((renderType & RenderType.Regular) != 0)
+                RenderRegular(mesh);
+
+            if ((renderType & RenderType.Wireframe) != 0)
+                RenderWireframe(mesh, wireFrameColor);
+
+            if ((renderType & RenderType.Normals) != 0)
+                DrawVertexNormals(mesh, Color.Red);
         }
 
         private void RenderRegular(Mesh mesh)
@@ -131,9 +126,19 @@ namespace ElRenderer
                 Float3 v2 = mesh.Vertices[t[1] - 1].position;
                 Float3 v3 = mesh.Vertices[t[2] - 1].position;
 
-                bitmap.elDrawLine(v1.xy, v2.xy, Color.Red);
-                bitmap.elDrawLine(v2.xy, v3.xy, Color.LightYellow);
+                bitmap.elDrawLine(v1.xy, v2.xy, color);
+                bitmap.elDrawLine(v2.xy, v3.xy, color);
                 bitmap.elDrawLine(v3.xy, v1.xy, color);
+            }
+        }
+
+        private void DrawVertexNormals(Mesh mesh, Color color)
+        {
+            for (int i = 0; i < mesh.Vertices.Count; i++)
+            {
+                Vertex v = mesh.Vertices[i];
+
+                bitmap.elDrawLine(v.position, (v.position + v.normal * 30), color);
             }
         }
     }

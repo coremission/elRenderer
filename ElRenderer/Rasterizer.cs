@@ -6,6 +6,34 @@ using static ElRenderer.Utils;
 
 namespace ElRenderer
 {
+    public class IVertex
+    {
+        public Int3 position;
+
+        public int x { get { return position.x; } }
+        public int y { get { return position.x; } }
+        public int z { get { return position.x; } }
+
+        public Float3 normal;
+
+        public Color color;
+
+        public Float2 uv;
+
+        public IVertex(Vertex v)
+        {
+            this.position = (Int3)v.position;
+            this.normal = v.normal;
+            this.color = v.color;
+            this.uv = v.uv;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("pos: {0}, normal: {1}, col: {2}", position, normal, color);
+        }
+    }
+
     public class Rasterizer
     {
         private Float3 whereLightComesFrom;
