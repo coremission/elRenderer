@@ -49,8 +49,9 @@
     <Compile Include="Algebraic\Float4.cs" />
     <Compile Include="Algebraic\Float4x4.cs" />
     <Compile Include="Algebraic\Int3.cs" />
-    <Compile Include="BitmapExtensions.cs" />
+    <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Defaults.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

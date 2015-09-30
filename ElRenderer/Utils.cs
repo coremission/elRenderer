@@ -35,6 +35,16 @@ namespace ElRenderer
             return a.CompareTo(b) >= 0 ? a : b;
         }
 
+        public static T Clamp<T>(T min, T max, T value) where T : IComparable<T>
+        {
+            if (value.CompareTo(min) < 0)
+                return min;
+            if (value.CompareTo(max) > 0)
+                return max;
+
+            return value;
+        }
+
         #endregion
 
         public static Color getRandomColor()
