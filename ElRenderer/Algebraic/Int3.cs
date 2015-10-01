@@ -30,6 +30,16 @@ namespace ElRenderer.Model
             return new Int3(a.x + b.x, a.y + b.y, a.z + b.z);
         }
 
+        public static bool operator ==(Int3 a, Int3 b)
+        {
+            return (a.x == b.x) && (a.y == b.y) && (a.z == b.z);
+        }
+
+        public static bool operator !=(Int3 a, Int3 b)
+        {
+            return !(a == b);
+        }
+
         public static Int3 operator *(Int3 a, float t)
         {
             return new Int3((int)(t * a.x + 0.5f),

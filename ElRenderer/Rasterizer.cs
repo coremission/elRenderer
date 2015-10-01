@@ -11,8 +11,8 @@ namespace ElRenderer
         public Int3 position;
 
         public int x { get { return position.x; } }
-        public int y { get { return position.x; } }
-        public int z { get { return position.x; } }
+        public int y { get { return position.y; } }
+        public int z { get { return position.z; } }
 
         public Float3 normal;
 
@@ -20,12 +20,21 @@ namespace ElRenderer
 
         public Float2 uv;
 
+        public IVertex() { }
         public IVertex(Vertex v)
         {
             this.position = (Int3)v.position;
             this.normal = v.normal;
             this.color = v.color;
             this.uv = v.uv;
+        }
+
+        public static IVertex lerp(IVertex start, IVertex end, float delta)
+        {
+            return new IVertex()
+            {
+                position = Int3.lerp(start.position, end.position, delta)
+            };
         }
 
         public override string ToString()
@@ -80,6 +89,14 @@ namespace ElRenderer
             if (v1.y > v3.y) swap(ref v1, ref v3);
             if (v2.y > v3.y) swap(ref v2, ref v3);
 
+            IVertex iv1 = new IVertex(_v1);
+            IVertex iv2 = new IVertex(_v2);
+            IVertex iv3 = new IVertex(_v3);
+
+            if (iv1.y > iv2.y) swap(ref iv1, ref iv2);
+            if (iv1.y > iv3.y) swap(ref iv1, ref iv3);
+            if (iv2.y > iv3.y) swap(ref iv2, ref iv3);
+
             int triangleYHeight = v3.y - v1.y + 1;
             int segmentHeight = v2.y - v1.y + 1;
 
@@ -90,8 +107,16 @@ namespace ElRenderer
                 Int3 A = Int3.lerp(v1, v3, alpha);
                 Int3 B = Int3.lerp(v1, v2, beta);
 
+                IVertex iA = IVertex.lerp(iv1, iv3, alpha);
+                IVertex iB = IVertex.lerp(iv1, iv2, beta);
+
                 if (A.x > B.x)
                     swap(ref A, ref B);
+
+                if (iA.x > iB.x)
+                    swap(ref iA, ref iB);
+
+
                 for (int x = A.x; x <= B.x; x++)
                 {
                     // check extremes
@@ -101,10 +126,13 @@ namespace ElRenderer
                         throw new ArgumentException("delta < 0");
                 
                     Int3 C = Int3.lerp(A, B, delta);
+                    IVertex iC = IVertex.lerp(iA, iB, delta);
 
                     DrawPointToFrameBuffer(x, y, C.z, color);
                 }
             }
+
+            return;
             segmentHeight = v3.y - v2.y + 1;
             for (int y = v2.y; y <= v3.y; y++)
             {
