@@ -6,8 +6,6 @@ namespace ElRenderer.Extensions
     {
         public static Color lerpTo(this Color start, Color end, float delta)
         {
-            return start;
-
             return add(start, mul(sub(end, start), delta));
         }
         

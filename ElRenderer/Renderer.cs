@@ -16,7 +16,7 @@ namespace ElRenderer
     {
         private Bitmap bitmap;
         
-        private Float3 whereLightComesFrom;
+        private Float3 lightDirection;
 
         private Color backGroundColor;
         private Fragment[,] zBuffer = new Fragment[Defaults.WIDTH, Defaults.HEIGHT];
@@ -34,14 +34,14 @@ namespace ElRenderer
                 }
             }
 
-            rasterizer = new Rasterizer(zBuffer, whereLightComesFrom);
+            rasterizer = new Rasterizer(zBuffer, lightDirection);
         }
 
         // Constructor
-        public Renderer(Bitmap bitmap, Color backGroundColor, Float3 whereLightComesFrom)
+        public Renderer(Bitmap bitmap, Color backGroundColor, Float3 lightDirection)
         {
             this.bitmap = bitmap;
-            this.whereLightComesFrom = whereLightComesFrom;
+            this.lightDirection = lightDirection;
             this.backGroundColor = backGroundColor;
             ResetZBuffer();
         }

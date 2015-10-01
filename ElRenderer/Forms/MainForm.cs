@@ -14,7 +14,7 @@ namespace ElRenderer
         private Renderer renderer;
         private Mesh mesh;
         private Float3 viewDirection = new Float3(0, 0, 1).normalize();
-        private Float3 whereLightComesFrom = new Float3(0f, 0f, -1f);
+        private Float3 lightDirection = new Float3(0f, -1f, -1f);
 
         private int yAngle = 0;
         private int xAngle = 0;
@@ -38,7 +38,7 @@ namespace ElRenderer
         {
             InitForm();
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
-            renderer = new Renderer(screen, BackgroundColor, whereLightComesFrom);
+            renderer = new Renderer(screen, BackgroundColor, lightDirection);
 
             mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
 
