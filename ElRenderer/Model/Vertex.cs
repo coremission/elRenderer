@@ -16,7 +16,7 @@ namespace ElRenderer.Model
         {
             this.position = position;
             this.normal = Float3.zero;
-            this.color = Color.White;
+            this.color = Color.Black;
             this.uv = new Float2(0, 0);
         }
 

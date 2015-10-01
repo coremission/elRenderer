@@ -38,7 +38,6 @@ namespace ElRenderer
                 new Triangle(4, 5, 6, Color.Green),
             };
 
-            result.RenderType = MeshRenderType.ColoredTriangular;
             return result;
         }
 

@@ -60,6 +60,7 @@ namespace ElRenderer
 
         public void Rasterize(Mesh mesh)
         {
+            // set interpolated color
             for (int i = 0; i < mesh.Triangles.Count; i++)
             {
                 Triangle t = mesh.Triangles[i];
@@ -68,17 +69,21 @@ namespace ElRenderer
                 Vertex v2 = mesh.Vertices[t[1] - 1];
                 Vertex v3 = mesh.Vertices[t[2] - 1];
 
-                if (mesh.RenderType == MeshRenderType.Default)
-                {
-                    int cc1 = getLamberComponent(v1.normal, lightDirection);
-                    int cc2 = getLamberComponent(v2.normal, lightDirection);
-                    int cc3 = getLamberComponent(v3.normal, lightDirection);
+                int cc1 = getLamberComponent(v1.normal, lightDirection);
+                int cc2 = getLamberComponent(v2.normal, lightDirection);
+                int cc3 = getLamberComponent(v3.normal, lightDirection);
 
-                    v1.color = Color.FromArgb(cc1, cc1, cc1);//.lerpTo(Color.Green, 0.5f);
-                    v2.color = Color.FromArgb(cc2, cc2, cc2);//.lerpTo(Color.Blue, 0.5f);
-                    v3.color = Color.FromArgb(cc3, cc3, cc3);//.lerpTo(Color.Red, 0.5f);
-                }
+                v1.color = v1.color.lerpTo(Color.FromArgb(cc1, cc1, cc1), 0.5f);//.lerpTo(Color.Green, 0.5f);
+                v2.color = v2.color.lerpTo(Color.FromArgb(cc2, cc2, cc2), 0.5f);//.lerpTo(Color.Blue, 0.5f);
+                v3.color = v3.color.lerpTo(Color.FromArgb(cc3, cc3, cc3), 0.5f);//.lerpTo(Color.Red, 0.5f);
+            }
 
+            for (int i = 0; i < mesh.Triangles.Count; i++)
+            {
+                Triangle t = mesh.Triangles[i];
+                Vertex v1 = mesh.Vertices[t[0] - 1];
+                Vertex v2 = mesh.Vertices[t[1] - 1];
+                Vertex v3 = mesh.Vertices[t[2] - 1];
                 RenderTriangle2(v1, v2, v3, lightDirection);
             }
         }
@@ -116,7 +121,7 @@ namespace ElRenderer
                     int lc = getLamberComponent(C.normal, lightDirection);
                     Color c = Color.FromArgb(lc, lc, lc);
 
-                    DrawPointToFrameBuffer(x, y, C.z, C.color);
+                    DrawPointToFrameBuffer(x, y, C.z, c);
                 }
             }
 
@@ -140,7 +145,7 @@ namespace ElRenderer
                     int lc = getLamberComponent(C.normal, lightDirection);
                     Color c = Color.FromArgb(lc, lc, lc);
 
-                    DrawPointToFrameBuffer(x, y, C.z, C.color);
+                    DrawPointToFrameBuffer(x, y, C.z, c);
                 }
             }
         }

@@ -8,7 +8,7 @@ namespace ElRenderer.Extensions
         {
             return add(start, mul(sub(end, start), delta));
         }
-        
+
         public static Color add(Color a, Color b)
         {
             return Color.FromArgb(Utils.Clamp(0, 255, a.R + b.R),

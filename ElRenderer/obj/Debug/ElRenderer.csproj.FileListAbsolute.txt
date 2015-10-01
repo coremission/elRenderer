@@ -23,3 +23,4 @@ f:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.Properties.Resources.reso
 f:\Projects\elrenderer\ElRenderer\obj\Debug\ElRenderer.csproj.GenerateResource.Cache
 d:\!My\ElRenderer\ElRenderer\bin\Debug\3dModels\african_head_diffuse.tga
 d:\!My\ElRenderer\ElRenderer\obj\Debug\ElRenderer.csprojResolveAssemblyReference.cache
+f:\Projects\elrenderer\ElRenderer\bin\Debug\3dModels\african_head_diffuse.tga

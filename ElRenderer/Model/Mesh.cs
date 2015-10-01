@@ -2,23 +2,15 @@
 
 namespace ElRenderer.Model
 {
-    public enum MeshRenderType
-    {
-        Default = 0,
-        ColoredTriangular = 1, // Color stored per single triangle
-    }
-
     public class Mesh
     {
         public List<Vertex> Vertices;
         public List<Triangle> Triangles;
-        public MeshRenderType RenderType;
 
         public Mesh()
         {
             Vertices = new List<Vertex>();
             Triangles = new List<Triangle>();
-            RenderType = MeshRenderType.Default;
         }
 
         public void RecalculateNormals()
