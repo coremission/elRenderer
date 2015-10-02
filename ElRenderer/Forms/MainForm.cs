@@ -46,7 +46,7 @@ namespace ElRenderer
             Bitmap texture = Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\african_head_diffuse.tga");
 
             SceneObject sObject = new SceneObject {mesh = mesh,
-                                                   material = new Material(texture)
+                                                   material = new Material(texture, RenderType.Regular)
                                                    };
 
             renderer.Render(sObject, viewDirection);

@@ -9,6 +9,7 @@ namespace ElRenderer
     {
         Regular = 1,
         Wireframe = 2,
+        RegularWithWireframe = 3,
         Normals = 4,
     }
 

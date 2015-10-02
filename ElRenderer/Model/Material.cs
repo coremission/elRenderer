@@ -4,12 +4,13 @@ namespace ElRenderer.Model
 {
     public class Material
     {
-        public Bitmap diffuseTexture;
-        public readonly RenderType renderType = RenderType.Regular;
+        public readonly Bitmap diffuseTexture;
+        public readonly RenderType renderType;
 
-        public Material(Bitmap diffuseTexture)
+        public Material(Bitmap diffuseTexture, RenderType renderType)
         {
             this.diffuseTexture = diffuseTexture;
+            this.renderType = renderType;
         }
     }
 }

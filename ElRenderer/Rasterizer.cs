@@ -72,9 +72,9 @@ namespace ElRenderer
                 Vertex v2 = mesh.Vertices[t[1] - 1];
                 Vertex v3 = mesh.Vertices[t[2] - 1];
 
-                int cc1 = getLamberComponent(v1.normal, lightDirection);
-                int cc2 = getLamberComponent(v2.normal, lightDirection);
-                int cc3 = getLamberComponent(v3.normal, lightDirection);
+                int cc1 = (int)(getLamberComponent(v1.normal, lightDirection) * 255);
+                int cc2 = (int)(getLamberComponent(v2.normal, lightDirection) * 255);
+                int cc3 = (int)(getLamberComponent(v3.normal, lightDirection) * 255);
 
                 v1.color = v1.color.lerpTo(Color.FromArgb(cc1, cc1, cc1), 0.5f);//.lerpTo(Color.Green, 0.5f);
                 v2.color = v2.color.lerpTo(Color.FromArgb(cc2, cc2, cc2), 0.5f);//.lerpTo(Color.Blue, 0.5f);
@@ -125,8 +125,10 @@ namespace ElRenderer
 
                     IVertex C = IVertex.lerp(A, B, delta);
 
-                    int lc = getLamberComponent(C.normal, lightDirection);
-                    Color c = Color.FromArgb(lc, lc, lc);
+                    float lc = getLamberComponent(C.normal, lightDirection);
+                    int intLambert = (int)(lc * 255);
+                    Color c = Color.FromArgb(intLambert, intLambert, intLambert);
+
                     c = tex2D(material.diffuseTexture, C.u, C.v);
                     DrawPointToFrameBuffer(x, y, C.z, c);
                 }
@@ -149,20 +151,22 @@ namespace ElRenderer
 
                     IVertex C = IVertex.lerp(A, B, delta);
 
-                    int lc = getLamberComponent(C.normal, lightDirection);
-                    Color c = Color.FromArgb(lc, lc, lc);
+                    float lc = getLamberComponent(C.normal, lightDirection);
+                    int intLambert = (int)(lc * 255);
+                    Color c = Color.FromArgb(intLambert, intLambert, intLambert);
+
                     c = tex2D(material.diffuseTexture, C.u, C.v);
                     DrawPointToFrameBuffer(x, y, C.z, c);
                 }
             }
         }
         
-        private int getLamberComponent(Float3 normal, Float3 lightDirection)
+        private float getLamberComponent(Float3 normal, Float3 lightDirection)
         {
             normal = normal.normalize();
             lightDirection = lightDirection.normalize();
 
-            int lambertComponent = (int)(255 * normal.dot(lightDirection.normalize()));
+            float lambertComponent = normal.dot(lightDirection.normalize());
             lambertComponent = lambertComponent < 0 ? 0 : lambertComponent;
             return lambertComponent;
         }
@@ -172,7 +176,7 @@ namespace ElRenderer
             u = Clamp(0f, 1f, u);
             v = Clamp(0f, 1f, v);
 
-            int x = (int)(u * tex.Width + 0.5f);
+            int x = (int)((1 - u) * tex.Width + 0.5f);
             int y = (int)((1 - v) * tex.Height + 0.5f);
             return tex.GetPixel(x, y);
         }
