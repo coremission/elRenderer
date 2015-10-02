@@ -60,6 +60,8 @@
     <Compile Include="Algebraic\Float2.cs" />
     <Compile Include="Algebraic\Int2.cs" />
     <Compile Include="Model\Fragment.cs" />
+    <Compile Include="Model\Material.cs" />
+    <Compile Include="Model\SceneObject.cs" />
     <Compile Include="Model\Triangle.cs" />
     <Compile Include="Algebraic\Float3x3.cs" />
     <Compile Include="Model\Mesh.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Rasterizer.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Service\WaveObjHelper.cs" />
+    <Compile Include="3rdParty\TargaImage.cs" />
     <Compile Include="Test_Data.cs" />
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

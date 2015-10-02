@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElRenderer", "ElRenderer\ElRenderer.csproj", "{A1FBC0A7-55EE-4A0C-AE66-B69E7D17955F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElRenderer_ConsoleTests", "ElRenderer_ConsoleTests\ElRenderer_ConsoleTests.csproj", "{0BBF4FFB-C27B-4C5D-B0CA-236C53D40410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{A1FBC0A7-55EE-4A0C-AE66-B69E7D17955F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1FBC0A7-55EE-4A0C-AE66-B69E7D17955F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1FBC0A7-55EE-4A0C-AE66-B69E7D17955F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0BBF4FFB-C27B-4C5D-B0CA-236C53D40410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BBF4FFB-C27B-4C5D-B0CA-236C53D40410}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BBF4FFB-C27B-4C5D-B0CA-236C53D40410}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BBF4FFB-C27B-4C5D-B0CA-236C53D40410}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

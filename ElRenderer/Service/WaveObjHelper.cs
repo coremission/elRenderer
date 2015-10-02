@@ -50,7 +50,10 @@ namespace ElRenderer.Service
             
             for(int i = 0; i < vPositions.Count; i++)
             {
-                result.Vertices.Add(new Vertex(vPositions[i]) { normal = normals[i].getOpposite().normalize() });
+                Vertex v = new Vertex(vPositions[i]);
+                if(normals.Count > 0)
+                    v.normal = normals[i].getOpposite().normalize();
+                result.Vertices.Add(v); 
             }
 
             return result;

@@ -53,15 +53,12 @@ namespace ElRenderer
             Int2[] t2 = new[] { new Int2(180, 150), new Int2(120, 160), new Int2(130, 180) };
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="mesh"></param>
-        /// <param name="renderType"></param>
-        /// <param name="viewDirection">Normal Vector from viewer's eye</param>
-        public void Render(Mesh mesh, RenderType renderType, Float3 viewDirection)
+        public void Render(SceneObject sObject, Float3 viewDirection)
         {
+            Mesh mesh = sObject.mesh;
             Color wireFrameColor = Color.LightGreen;
+            RenderType renderType = sObject.material.renderType;
+
             // Vertex uniforms
 
             // scale matrix
@@ -97,7 +94,7 @@ namespace ElRenderer
             }
 
             if((renderType & RenderType.Regular) != 0)
-                RenderRegular(mesh);
+                RenderRegular(mesh, sObject.material);
 
             if ((renderType & RenderType.Wireframe) != 0)
                 RenderWireframe(mesh, wireFrameColor);
@@ -106,9 +103,9 @@ namespace ElRenderer
                 DrawVertexNormals(mesh, Color.Red);
         }
 
-        private void RenderRegular(Mesh mesh)
+        private void RenderRegular(Mesh mesh, Material material)
         {
-            rasterizer.Rasterize(mesh);
+            rasterizer.Rasterize(mesh, material);
 
             // FRAGMENT SHADER
             for (int x = 0; x < Defaults.WIDTH; x++)

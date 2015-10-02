@@ -41,11 +41,15 @@ namespace ElRenderer
             renderer = new Renderer(screen, BackgroundColor, lightDirection);
 
             mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
-
             //mesh = Test_Data.getOverlappedTriangles();
-            RenderType renderType = RenderType.Regular;
+            
+            Bitmap texture = Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\african_head_diffuse.tga");
 
-            renderer.Render(mesh, renderType, viewDirection);
+            SceneObject sObject = new SceneObject {mesh = mesh,
+                                                   material = new Material(texture)
+                                                   };
+
+            renderer.Render(sObject, viewDirection);
         }
 
         private void rotateMeshAroundXY(Mesh mesh, float xAngle, float yAngle)

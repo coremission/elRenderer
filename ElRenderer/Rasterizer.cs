@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using ElRenderer.Model;
 // TODO: To use helper methods more comfortable
 using static ElRenderer.Utils;
@@ -14,6 +13,9 @@ namespace ElRenderer
         public int x { get { return position.x; } }
         public int y { get { return position.y; } }
         public int z { get { return position.z; } }
+        
+        public float u { get { return uv.x; } }
+        public float v { get { return uv.y; } } 
 
         public Float3 normal;
 
@@ -36,7 +38,8 @@ namespace ElRenderer
             {
                 position = Int3.lerp(start.position, end.position, delta),
                 normal = Float3.lerp(start.normal, end.normal, delta),
-                color = start.color.lerpTo(end.color, delta)
+                color = start.color.lerpTo(end.color, delta),
+                uv = Float2.lerp(start.uv, end.uv, delta),
             };
         }
 
@@ -58,7 +61,7 @@ namespace ElRenderer
             this.lightDirection = lightDirection;
         }
 
-        public void Rasterize(Mesh mesh)
+        public void Rasterize(Mesh mesh, Material material)
         {
             // set interpolated color
             for (int i = 0; i < mesh.Triangles.Count; i++)
@@ -77,18 +80,18 @@ namespace ElRenderer
                 v2.color = v2.color.lerpTo(Color.FromArgb(cc2, cc2, cc2), 0.5f);//.lerpTo(Color.Blue, 0.5f);
                 v3.color = v3.color.lerpTo(Color.FromArgb(cc3, cc3, cc3), 0.5f);//.lerpTo(Color.Red, 0.5f);
             }
-
+            
             for (int i = 0; i < mesh.Triangles.Count; i++)
             {
                 Triangle t = mesh.Triangles[i];
                 Vertex v1 = mesh.Vertices[t[0] - 1];
                 Vertex v2 = mesh.Vertices[t[1] - 1];
                 Vertex v3 = mesh.Vertices[t[2] - 1];
-                RenderTriangle2(v1, v2, v3, lightDirection);
+                RenderTriangle2(v1, v2, v3, material, lightDirection);
             }
         }
 
-        private void RenderTriangle2(Vertex _v1, Vertex _v2, Vertex _v3, Float3 lightDirection)
+        private void RenderTriangle2(Vertex _v1, Vertex _v2, Vertex _v3, Material material, Float3 lightDirection)
         {
             IVertex v1 = new IVertex(_v1);
             IVertex v2 = new IVertex(_v2);
@@ -99,15 +102,19 @@ namespace ElRenderer
             if (v2.y > v3.y) swap(ref v2, ref v3);
 
             int triangleYHeight = v3.y - v1.y + 1;
-            int segmentHeight = v2.y - v1.y + 1;
+            int firstSegmentHeight = v2.y - v1.y + 1;
+            int secondSegmentHeight = v3.y - v2.y + 1;
 
             for (int y = v1.y; y <= v2.y; y++)
             {
-                float alpha = (float)(y - v1.y) / (float)triangleYHeight;
-                float beta = (float)(y - v1.y) / (float)segmentHeight;
+                bool firstSegment = y <= v2.y;
+                int stripStartY = firstSegment ? v1.y : v2.y;
+
+                float alpha = (float)(y - stripStartY) / (float)triangleYHeight;
+                float beta = (float)(y - stripStartY) / (float)(firstSegment ? firstSegmentHeight : secondSegmentHeight);
 
                 IVertex A = IVertex.lerp(v1, v3, alpha);
-                IVertex B = IVertex.lerp(v1, v2, beta);
+                IVertex B = IVertex.lerp(v1, firstSegment ? v2 : v3, beta);
 
                 if (A.x > B.x)
                     swap(ref A, ref B);
@@ -120,12 +127,12 @@ namespace ElRenderer
 
                     int lc = getLamberComponent(C.normal, lightDirection);
                     Color c = Color.FromArgb(lc, lc, lc);
-
+                    c = tex2D(material.diffuseTexture, C.u, C.v);
                     DrawPointToFrameBuffer(x, y, C.z, c);
                 }
             }
 
-            segmentHeight = v3.y - v2.y + 1;
+            int segmentHeight = v3.y - v2.y + 1;
             for (int y = v2.y; y <= v3.y; y++)
             {
                 float alpha = (float)(y - v1.y) / (float)triangleYHeight;
@@ -158,6 +165,16 @@ namespace ElRenderer
             int lambertComponent = (int)(255 * normal.dot(lightDirection.normalize()));
             lambertComponent = lambertComponent < 0 ? 0 : lambertComponent;
             return lambertComponent;
+        }
+
+        private Color tex2D(Bitmap tex, float u, float v)
+        {
+            u = Clamp(u, 0f, 1f);
+            v = Clamp(v, 0f, 1f);
+
+            int x = (int)(u * tex.Width + 0.5f);
+            int y = (int)(v * tex.Height + 0.5f);
+            return tex.GetPixel(x, y);
         }
 
         private void DrawPointToFrameBuffer(int x, int y, float z, Color c)
