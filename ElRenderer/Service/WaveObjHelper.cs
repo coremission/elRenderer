@@ -108,15 +108,19 @@ namespace ElRenderer.Service
                 }
             }
 
-            result.Vertices = new List<Vertex>(new Vertex[vPositions.Count]);
+            result.Vertices = new List<Vertex>();
+            for(int i = 0; i < vPositions.Count; i++)
+            {
+                result.Vertices.Add(new Vertex(vPositions[i]));
+            }
 
             for(int i = 0; i < wTriangles.Count; i++)
             {
                 WObjTriangle wTriangle = wTriangles[i];
 
-                Vertex v1 = new Vertex(vPositions[wTriangle.v1 - 1]);
-                Vertex v2 = new Vertex(vPositions[wTriangle.v2 - 1]);
-                Vertex v3 = new Vertex(vPositions[wTriangle.v3 - 1]);
+                Vertex v1 = result.Vertices[wTriangle.v1 - 1];
+                Vertex v2 = result.Vertices[wTriangle.v2 - 1];
+                Vertex v3 = result.Vertices[wTriangle.v3 - 1];
 
                 v1.normal = normals[wTriangle.n1 - 1];
                 v1.uv = uvs[wTriangle.uv1 - 1];
@@ -126,10 +130,6 @@ namespace ElRenderer.Service
 
                 v3.normal = normals[wTriangle.n3 - 1];
                 v3.uv = uvs[wTriangle.uv3 - 1];
-
-                result.Vertices[wTriangle.v1 - 1] = v1;
-                result.Vertices[wTriangle.v2 - 1] = v2;
-                result.Vertices[wTriangle.v3 - 1] = v3;
             }
 
             return result;
