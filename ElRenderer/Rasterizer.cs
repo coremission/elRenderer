@@ -151,7 +151,7 @@ namespace ElRenderer
 
                     int lc = getLamberComponent(C.normal, lightDirection);
                     Color c = Color.FromArgb(lc, lc, lc);
-
+                    c = tex2D(material.diffuseTexture, C.u, C.v);
                     DrawPointToFrameBuffer(x, y, C.z, c);
                 }
             }
@@ -169,11 +169,11 @@ namespace ElRenderer
 
         private Color tex2D(Bitmap tex, float u, float v)
         {
-            u = Clamp(u, 0f, 1f);
-            v = Clamp(v, 0f, 1f);
+            u = Clamp(0f, 1f, u);
+            v = Clamp(0f, 1f, v);
 
             int x = (int)(u * tex.Width + 0.5f);
-            int y = (int)(v * tex.Height + 0.5f);
+            int y = (int)((1 - v) * tex.Height + 0.5f);
             return tex.GetPixel(x, y);
         }
 

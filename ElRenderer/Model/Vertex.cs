@@ -22,7 +22,7 @@ namespace ElRenderer.Model
 
         public override string ToString()
         {
-            return string.Format("pos: {0}, normal: {1}, col: {2}", position, normal, color);
+            return string.Format("pos: {0}, normal: {1}, uv: {2}, color: {3}", position, normal, uv, color);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ElRenderer
                 new Vertex(new Float3(-1,  1, 0)),
                 new Vertex(new Float3(-1, -1, 0)),
             };
-            result.Triangles = new List<Triangle>() { new Triangle(1, 2, 3, Color.Red) };
+            result.Triangles = new List<Triangle>() { new Triangle(1, 2, 3) };
 
             return result;
         }
@@ -34,8 +34,8 @@ namespace ElRenderer
                 new Vertex(new Float3( 1, -1,  1)),
             };
             result.Triangles = new List<Triangle>() {
-                new Triangle(1, 2, 3, Color.Red),
-                new Triangle(4, 5, 6, Color.Green),
+                new Triangle(1, 2, 3),
+                new Triangle(4, 5, 6),
             };
 
             return result;
@@ -54,8 +54,8 @@ namespace ElRenderer
                 new Vertex(new Float3(-1,  1,  0)),
             };
             result.Triangles = new List<Triangle>() {
-                new Triangle(1, 2, 3, Color.Red),
-                new Triangle(4, 5, 6, Color.Green),
+                new Triangle(1, 2, 3),
+                new Triangle(4, 5, 6),
             };
 
             return result;
@@ -76,12 +76,12 @@ namespace ElRenderer
                     new Vertex(new Float3(-1, -1, -1))  // 8
                 };
             result.Triangles = new List<Triangle>(){
-                    new Triangle(1, 2, 3, Color.Red), new Triangle(1, 3, 4, Color.Red), // right
-                    new Triangle(1, 5, 8, Color.Green), new Triangle(1, 4, 5, Color.Green), // front or back
-                    new Triangle(4, 3, 6, Color.White), new Triangle(4, 6, 5, Color.FloralWhite),
-                    new Triangle(2, 6, 3, Color.DarkViolet), new Triangle(2, 7, 6, Color.Violet), // front or back
-                    new Triangle(1, 7, 2, Color.Blue), new Triangle(1, 8, 7, Color.BlueViolet),
-                    new Triangle(8, 5, 7, Color.YellowGreen), new Triangle(5, 6, 7, Color.Yellow), // left
+                    new Triangle(1, 2, 3), new Triangle(1, 3, 4),
+                    new Triangle(1, 5, 8), new Triangle(1, 4, 5),
+                    new Triangle(4, 3, 6), new Triangle(4, 6, 5),
+                    new Triangle(2, 6, 3), new Triangle(2, 7, 6),
+                    new Triangle(1, 7, 2), new Triangle(1, 8, 7),
+                    new Triangle(8, 5, 7), new Triangle(5, 6, 7),
                 };
 
             return result;
