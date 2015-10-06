@@ -105,42 +105,16 @@ namespace ElRenderer
             int firstSegmentHeight = v2.y - v1.y + 1;
             int secondSegmentHeight = v3.y - v2.y + 1;
 
-            for (int y = v1.y; y <= v2.y; y++)
+            for (int y = v1.y; y <= v3.y; y++)
             {
-                bool firstSegment = y <= v2.y;
-                int stripStartY = firstSegment ? v1.y : v2.y;
+                bool isFirstSegment = y < v2.y;
+                int segmentStartY = isFirstSegment ? v1.y : v2.y;
 
-                float alpha = (float)(y - stripStartY) / (float)triangleYHeight;
-                float beta = (float)(y - stripStartY) / (float)(firstSegment ? firstSegmentHeight : secondSegmentHeight);
-
-                IVertex A = IVertex.lerp(v1, v3, alpha);
-                IVertex B = IVertex.lerp(v1, firstSegment ? v2 : v3, beta);
-
-                if (A.x > B.x)
-                    swap(ref A, ref B);
-                for (int x = A.x; x <= B.x; x++)
-                {
-                    // check extremes
-                    float delta = (A.x == B.x) ? 1.0f : (float)(x - A.x) / (float)(B.x - A.x);
-
-                    IVertex C = IVertex.lerp(A, B, delta);
-
-                    float lc = getLamberComponent(C.normal, lightDirection);
-                    int intLambert = (int)(lc * 255);
-                    Color c = Color.FromArgb(intLambert, intLambert, intLambert);
-
-                    c = tex2D(material.diffuseTexture, C.u, C.v);
-                    DrawPointToFrameBuffer(x, y, C.z, c);
-                }
-            }
-
-            int segmentHeight = v3.y - v2.y + 1;
-            for (int y = v2.y; y <= v3.y; y++)
-            {
                 float alpha = (float)(y - v1.y) / (float)triangleYHeight;
-                float beta = (float)(y - v2.y) / (float)segmentHeight;
                 IVertex A = IVertex.lerp(v1, v3, alpha);
-                IVertex B = IVertex.lerp(v2, v3, beta);
+
+                float beta = (float)(y - segmentStartY) / (float)(isFirstSegment ? firstSegmentHeight : secondSegmentHeight);
+                IVertex B = IVertex.lerp(isFirstSegment ? v1 : v2, isFirstSegment ? v2 : v3, beta);
 
                 if (A.x > B.x)
                     swap(ref A, ref B);
