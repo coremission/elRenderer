@@ -14,7 +14,7 @@ namespace ElRenderer
         private Renderer renderer;
         private Mesh mesh;
         private Float3 viewDirection = new Float3(0, 0, 1).normalize();
-        private Float3 lightDirection = new Float3(0f, -1f, -1f);
+        private Float3 lightDirection = new Float3(0f, -1, 0);
 
         private int yAngle = 0;
         private int xAngle = 0;

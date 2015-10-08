@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using static ElRenderer.Utils;
 
 namespace ElRenderer.Model
 {
@@ -7,6 +9,10 @@ namespace ElRenderer.Model
         public float x;
         public float y;
         public float z;
+
+        public float r { get { return Clamp(0f, 1f, x); } }
+        public float g { get { return Clamp(0f, 1f, y); } }
+        public float b { get { return Clamp(0f, 1f, z); } }
 
         public Float2 xy
         {
@@ -70,11 +76,21 @@ namespace ElRenderer.Model
             return M * scalar;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Float3))
+                return false;
+
+            Float3 b = (Float3)obj;
+
+            return (float.Equals(this.x, b.x) &&
+                    float.Equals(this.y, b.y) &&
+                    float.Equals(this.z, b.z));
+        }
+
         public static bool operator ==(Float3 a, Float3 b)
         {
-            return (float.Equals(a.x, b.x) &&
-                    float.Equals(a.y, b.y) &&
-                    float.Equals(a.z, b.z));
+            return a.Equals(b);
         }
 
         public static bool operator !=(Float3 a, Float3 b)
@@ -124,6 +140,14 @@ namespace ElRenderer.Model
         public static Float3 lerp(Float3 start, Float3 end, float delta)
         {
             return start + (end - start) * delta;
+        }
+
+        public Color ToColor()
+        {
+            return Color.FromArgb((int)(r * 255),
+                                  (int)(g * 255),
+                                  (int)(b * 255)
+            );
         }
     }
 }

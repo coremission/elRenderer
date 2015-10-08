@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Drawing;
+using static ElRenderer.Utils;
 
 namespace ElRenderer.Model
 {
@@ -8,5 +9,9 @@ namespace ElRenderer.Model
         public float y;
         public float z;
         public float w;
+
+        public float r { get { return Clamp(0f, 1f, x); } }
+        public float g { get { return Clamp(0f, 1f, y); } }
+        public float b { get { return Clamp(0f, 1f, z); } }
     }
 }

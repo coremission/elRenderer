@@ -76,9 +76,9 @@ namespace ElRenderer
                 int cc2 = (int)(getLamberComponent(v2.normal, lightDirection) * 255);
                 int cc3 = (int)(getLamberComponent(v3.normal, lightDirection) * 255);
 
-                v1.color = v1.color.lerpTo(Color.FromArgb(cc1, cc1, cc1), 0.5f);//.lerpTo(Color.Green, 0.5f);
-                v2.color = v2.color.lerpTo(Color.FromArgb(cc2, cc2, cc2), 0.5f);//.lerpTo(Color.Blue, 0.5f);
-                v3.color = v3.color.lerpTo(Color.FromArgb(cc3, cc3, cc3), 0.5f);//.lerpTo(Color.Red, 0.5f);
+                v1.color = Color.FromArgb(cc1, cc1, cc1);//.lerpTo(Color.Green, 0.5f);
+                v2.color = Color.FromArgb(cc2, cc2, cc2);//.lerpTo(Color.Blue, 0.5f);
+                v3.color = Color.FromArgb(cc3, cc3, cc3);//.lerpTo(Color.Red, 0.5f);
             }
             
             for (int i = 0; i < mesh.Triangles.Count; i++)
@@ -129,7 +129,7 @@ namespace ElRenderer
                     int intLambert = (int)(lc * 255);
                     Color c = Color.FromArgb(intLambert, intLambert, intLambert);
 
-                    c = tex2D(material.diffuseTexture, C.u, C.v);
+                    //c = tex2D(material.diffuseTexture, C.u, C.v);
                     DrawPointToFrameBuffer(x, y, C.z, c);
                 }
             }
@@ -161,21 +161,10 @@ namespace ElRenderer
             if (x < 0 || y < 0 || x > Defaults.WIDTH - 1 || y > Defaults.HEIGHT - 1)
                 return;
 
-            float bZ = zBuffer[x, y].z;
-
-            if(z < bZ && bZ < float.PositiveInfinity)
-            {
-                ;
-            }
-            if(zBuffer[x, y].z < float.PositiveInfinity)
-            {
-                ;
-            }
             // Z buffer test (Z axis points away from viewer/camera)
             if (z < zBuffer[x, y].z)
             {
-                int cc = (int)(((float)(z + 150.0)/(float)300.0 ) * 255);
-                zBuffer[x, y].color = c;// Color.FromArgb(cc, cc, cc);
+                zBuffer[x, y].color = c;
                 zBuffer[x, y].z = z;
             }
         }
