@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System;
+using ElRenderer.Algebraic;
 using ElRenderer.Model;
 
 namespace ElRenderer

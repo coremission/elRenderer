@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ElRenderer.Algebraic;
+using System.Collections.Generic;
 
 namespace ElRenderer.Model
 {

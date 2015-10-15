@@ -3,7 +3,7 @@
 *.pdb
 *.cache
 ElRenderer/bin
-ElRenderer/obj.vs
+ElRenderer/obj
 MathTests/bin
 MathTests/obj
 .vs/*

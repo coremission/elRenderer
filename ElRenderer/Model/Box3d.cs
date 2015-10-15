@@ -1,4 +1,6 @@
-﻿namespace ElRenderer.Model
+﻿using ElRenderer.Algebraic;
+
+namespace ElRenderer.Model
 {
     public struct Box3d
     {

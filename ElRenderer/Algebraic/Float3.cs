@@ -2,7 +2,7 @@
 using System.Drawing;
 using static ElRenderer.Utils;
 
-namespace ElRenderer.Model
+namespace ElRenderer.Algebraic
 {
     public struct Float3
     {

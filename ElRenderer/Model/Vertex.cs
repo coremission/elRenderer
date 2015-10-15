@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using ElRenderer.Algebraic;
+using System.Drawing;
 
 namespace ElRenderer.Model
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using static System.Math;
 
-namespace ElRenderer.Model
+namespace ElRenderer.Algebraic
 {
     public struct Float4x4
     {

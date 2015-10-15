@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ElRenderer.Model
+namespace ElRenderer.Algebraic
 {
     public struct Float2
     {

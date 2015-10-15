@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using ElRenderer.Model;
 using System.Collections.Generic;
+using ElRenderer.Algebraic;
 
 namespace ElRenderer.Service
 {

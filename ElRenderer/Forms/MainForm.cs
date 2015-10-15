@@ -3,6 +3,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using ElRenderer.Service;
 using ElRenderer.Model;
+using ElRenderer.Algebraic;
 
 namespace ElRenderer
 {

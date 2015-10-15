@@ -3,6 +3,7 @@ using ElRenderer.Model;
 // TODO: To use helper methods more comfortable
 using static ElRenderer.Utils;
 using ElRenderer.Extensions;
+using ElRenderer.Algebraic;
 
 namespace ElRenderer
 {

@@ -2,6 +2,7 @@
 using ElRenderer.Model;
 using System;
 using System.Drawing;
+using ElRenderer.Algebraic;
 
 namespace ElRenderer
 {

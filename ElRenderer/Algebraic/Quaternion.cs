@@ -8,6 +8,8 @@ namespace ElRenderer.Algebraic
         public float y;
         public float z;
 
+        public Float3 v { get { return new Float3(x, y, z); } }
+
         public Quaternion(float w, float x, float y, float z)
         {
             this.w = w;
