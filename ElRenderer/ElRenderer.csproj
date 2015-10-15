@@ -49,6 +49,7 @@
     <Compile Include="Algebraic\Float4.cs" />
     <Compile Include="Algebraic\Float4x4.cs" />
     <Compile Include="Algebraic\Int3.cs" />
+    <Compile Include="Algebraic\elMath.cs" />
     <Compile Include="Algebraic\Quaternion.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Defaults.cs" />
