@@ -1,6 +1,9 @@
 *.suo
 *.exe
 *.pdb
+*.cache
 ElRenderer/bin
 ElRenderer/obj.vs
+MathTests/bin
+MathTests/obj
 .vs/*
