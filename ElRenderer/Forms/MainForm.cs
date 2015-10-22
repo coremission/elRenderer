@@ -41,13 +41,15 @@ namespace ElRenderer
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
             renderer = new Renderer(screen, BackgroundColor, lightDirection);
 
-            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
+            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\dice.obj");
             //mesh = Test_Data.getOverlappedTriangles();
-            
+            //mesh.RecalculateNormals();
             Bitmap texture = Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\african_head_diffuse.tga");
 
             SceneObject sObject = new SceneObject {mesh = mesh,
-                                                   material = new Material(texture, RenderType.Regular)
+                                                   material = new Material(texture, RenderType.Regular),
+                                                   uniformScale = 100,
+                                                   rotation = new Float3(10, 10, 0),
                                                    };
 
             renderer.Render(sObject, viewDirection);
@@ -56,7 +58,7 @@ namespace ElRenderer
         private void rotateMeshAroundXY(Mesh mesh, float xAngle, float yAngle)
         {
             // rotation matrix
-            Float3x3 R = Float3x3.getRotationMatrix(xAngle, yAngle, 0);
+            Float3x3 R = Float3x3.getRotationMatrix(new Float3(xAngle, yAngle, 0));
 
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {

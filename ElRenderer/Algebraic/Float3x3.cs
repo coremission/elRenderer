@@ -97,8 +97,12 @@ namespace ElRenderer.Algebraic
             }
         }
 
-        public static Float3x3 getRotationMatrix(float xAngle, float yAngle, float zAngle)
+        public static Float3x3 getRotationMatrix(Float3 rotation)
         {
+            float xAngle = rotation.x;
+            float yAngle = rotation.y;
+            float zAngle = rotation.z;
+
             xAngle *= ((float)Math.PI / 180.0f);
             yAngle *= ((float)Math.PI / 180.0f);
             zAngle *= ((float)Math.PI / 180.0f);

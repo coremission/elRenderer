@@ -16,7 +16,6 @@ namespace ElRenderer.Model
 
         public void RecalculateNormals()
         {
-            return;
             for (int i = 0; i < Triangles.Count; i++)
             {
                 Triangle t = Triangles[i];
@@ -30,8 +29,8 @@ namespace ElRenderer.Model
                 Float3 v3n = Utils.getTriangleNormal(v3.position, v2.position, v1.position);
 
                 v1.normal = lerpNormal(v1.normal, v1n);
-                v2.normal = lerpNormal(v1.normal, v2n);
-                v3.normal = lerpNormal(v1.normal, v3n);
+                v2.normal = lerpNormal(v2.normal, v2n);
+                v3.normal = lerpNormal(v3.normal, v3n);
             }
         }
 

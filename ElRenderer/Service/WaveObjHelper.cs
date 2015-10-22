@@ -37,6 +37,11 @@ namespace ElRenderer.Service
                 this.uv2 = uv2;
                 this.uv3 = uv3;
             }
+
+            public override string ToString()
+            {
+                return string.Format("vi[{0}, {1}, {2}]; ni[{3}, {4}, {5}]; uvi[{6}, {7}, {8}];", v1, v2, v3, n1, n2, n3, uv1, uv2, uv3);
+            }
         }
 
         public static Mesh ReadMeshFromFile(string filePath)
@@ -100,9 +105,13 @@ namespace ElRenderer.Service
                     if (!string.IsNullOrEmpty(f3[1]))
                         t3 = int.Parse(f3[1]);
 
-                    int n1 = int.Parse(f1[2]);
-                    int n2 = int.Parse(f2[2]);
-                    int n3 = int.Parse(f3[2]);
+                    int n1 = 0, n2 = 0, n3 = 0;
+                    // if normals specified
+                    if (f1.Length > 2) {
+                        n1 = int.Parse(f1[2]);
+                        n2 = int.Parse(f2[2]);
+                        n3 = int.Parse(f3[2]);
+                    }
 
                     wTriangles.Add(new WObjTriangle(v1, v2, v3, n1, n2, n3, t1, t2, t3));
                     result.Triangles.Add(new Triangle(v1, v2, v3));
@@ -123,13 +132,15 @@ namespace ElRenderer.Service
                 Vertex v2 = result.Vertices[wTriangle.v2 - 1];
                 Vertex v3 = result.Vertices[wTriangle.v3 - 1];
 
-                v1.normal = normals[wTriangle.n1 - 1];
+                if(normals.Count > 0)
+                {
+                    v1.normal = normals[wTriangle.n1 - 1];
+                    v2.normal = normals[wTriangle.n2 - 1];
+                    v3.normal = normals[wTriangle.n3 - 1];
+                }
+                
                 v1.uv = uvs[wTriangle.uv1 - 1];
-
-                v2.normal = normals[wTriangle.n2 - 1];
                 v2.uv = uvs[wTriangle.uv2 - 1];
-
-                v3.normal = normals[wTriangle.n3 - 1];
                 v3.uv = uvs[wTriangle.uv3 - 1];
             }
 

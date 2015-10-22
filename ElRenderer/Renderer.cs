@@ -64,9 +64,9 @@ namespace ElRenderer
             // Vertex uniforms
 
             // scale matrix
-            Float3x3 S = Float3x3.identity * 300;
+            Float3x3 S = Float3x3.identity * sObject.uniformScale;
             // rotation matrix
-            Float3x3 R = Float3x3.getRotationMatrix(0, 180, 0);
+            Float3x3 R = Float3x3.getRotationMatrix(sObject.rotation);
 
             Float3x3 Combined = S * R;
 

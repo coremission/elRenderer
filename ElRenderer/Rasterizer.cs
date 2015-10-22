@@ -143,7 +143,7 @@ namespace ElRenderer
 
             float lambertComponent = normal.dot(lightDirection.normalize());
             lambertComponent = lambertComponent < 0 ? 0 : lambertComponent;
-            return lambertComponent;
+            return Clamp(0, 255, lambertComponent);
         }
 
         private Color tex2D(Bitmap tex, float u, float v)
