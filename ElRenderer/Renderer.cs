@@ -12,6 +12,8 @@ namespace ElRenderer
         Wireframe = 2,
         RegularWithWireframe = 3,
         Normals = 4,
+        RegularWithNormals = 5,
+        RegularWithWireframeAndNormals = 7
     }
 
     public class Renderer
@@ -88,6 +90,8 @@ namespace ElRenderer
             {
                 Vertex v = mesh.Vertices[i];
                 Float3 p = v.position.mul(Combined);
+                // TODO: Transforming normals while NON UNIFORM TRANSFORMS
+                v.normal = v.normal.mul(R);
                 v.position = new Float3(p.x + Defaults.WIDTH / 2, p.y + Defaults.HEIGHT / 2, p.z);
             }
 

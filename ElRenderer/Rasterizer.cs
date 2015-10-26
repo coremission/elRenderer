@@ -71,6 +71,9 @@ namespace ElRenderer
                 Vertex v2 = mesh.Vertices[t[1] - 1];
                 Vertex v3 = mesh.Vertices[t[2] - 1];
 
+                //v2.normal = v1.normal;
+                //v3.normal = v1.normal;
+
                 int cc1 = (int)(getLamberComponent(v1.normal, lightDirection) * 255);
                 int cc2 = (int)(getLamberComponent(v2.normal, lightDirection) * 255);
                 int cc3 = (int)(getLamberComponent(v3.normal, lightDirection) * 255);

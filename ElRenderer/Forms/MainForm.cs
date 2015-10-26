@@ -43,15 +43,15 @@ namespace ElRenderer
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
             renderer = new Renderer(screen, BackgroundColor);
 
-            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\chooper.obj");
+            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
             //mesh = Test_Data.getOverlappedTriangles();
             //mesh.RecalculateNormals();
             Bitmap texture = null;// Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\african_head_diffuse.tga");
 
             SceneObject sObject = new SceneObject {mesh = mesh,
-                                                   material = new Material(texture, RenderType.RegularWithWireframe),
-                                                   uniformScale = 2f,
-                                                   rotation = new Float3(0, 30, 0),
+                                                   material = new Material(texture, RenderType.Regular),
+                                                   uniformScale = 300f,
+                                                   rotation = new Float3(0, 80, 0),
                                                    };
 
             renderer.Render(sObject, viewDirection, lightDirection);

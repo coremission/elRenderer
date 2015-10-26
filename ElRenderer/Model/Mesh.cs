@@ -25,12 +25,12 @@ namespace ElRenderer.Model
                 Vertex v3 = Vertices[t[2] - 1];
 
                 Float3 v1n = Utils.getTriangleNormal(v1.position, v2.position, v3.position);
-                Float3 v2n = Utils.getTriangleNormal(v2.position, v1.position, v3.position);
-                Float3 v3n = Utils.getTriangleNormal(v3.position, v2.position, v1.position);
+                Float3 v2n = Utils.getTriangleNormal(v2.position, v3.position, v1.position);
+                Float3 v3n = Utils.getTriangleNormal(v3.position, v1.position, v2.position);
 
-                v1.normal = lerpNormal(v1.normal, v1n);
-                v2.normal = lerpNormal(v2.normal, v2n);
-                v3.normal = lerpNormal(v3.normal, v3n);
+                v1.normal = v1.normal == Float3.zero ? v1n : lerpNormal(v1.normal, v1n);
+                v2.normal = v2.normal == Float3.zero ? v2n : lerpNormal(v2.normal, v2n);
+                v3.normal = v3.normal == Float3.zero ? v3n : lerpNormal(v3.normal, v3n);
             }
         }
 
