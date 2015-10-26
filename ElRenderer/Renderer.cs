@@ -17,9 +17,6 @@ namespace ElRenderer
     public class Renderer
     {
         private Bitmap bitmap;
-        
-        private Float3 lightDirection;
-
         private Color backGroundColor;
         private Fragment[,] zBuffer = new Fragment[Defaults.WIDTH, Defaults.HEIGHT];
         private Rasterizer rasterizer;
@@ -36,14 +33,13 @@ namespace ElRenderer
                 }
             }
 
-            rasterizer = new Rasterizer(zBuffer, lightDirection);
+            rasterizer = new Rasterizer(zBuffer);
         }
 
         // Constructor
-        public Renderer(Bitmap bitmap, Color backGroundColor, Float3 lightDirection)
+        public Renderer(Bitmap bitmap, Color backGroundColor)
         {
             this.bitmap = bitmap;
-            this.lightDirection = lightDirection;
             this.backGroundColor = backGroundColor;
             ResetZBuffer();
         }
@@ -55,7 +51,7 @@ namespace ElRenderer
             Int2[] t2 = new[] { new Int2(180, 150), new Int2(120, 160), new Int2(130, 180) };
         }
 
-        public void Render(SceneObject sObject, Float3 viewDirection)
+        public void Render(SceneObject sObject, Float3 viewDirection, Float3 lightDirection)
         {
             Mesh mesh = sObject.mesh;
             Color wireFrameColor = Color.LightGreen;
@@ -96,7 +92,7 @@ namespace ElRenderer
             }
 
             if((renderType & RenderType.Regular) != 0)
-                RenderRegular(mesh, sObject.material);
+                RenderRegular(mesh, sObject.material, lightDirection);
 
             if ((renderType & RenderType.Wireframe) != 0)
                 RenderWireframe(mesh, wireFrameColor);
@@ -105,9 +101,9 @@ namespace ElRenderer
                 DrawVertexNormals(mesh, Color.Red);
         }
 
-        private void RenderRegular(Mesh mesh, Material material)
+        private void RenderRegular(Mesh mesh, Material material, Float3 lightDirection)
         {
-            rasterizer.Rasterize(mesh, material);
+            rasterizer.Rasterize(mesh, material, lightDirection);
 
             // FRAGMENT SHADER
             for (int x = 0; x < Defaults.WIDTH; x++)

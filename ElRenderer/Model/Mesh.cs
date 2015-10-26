@@ -39,7 +39,7 @@ namespace ElRenderer.Model
             if (currentValue == Float3.zero)
                 return newValue;
 
-            return Float3.lerp(currentValue, newValue, 0.5f);
+            return Float3.lerp(currentValue, newValue, 0.5f).normalize();
         }
     }
 }

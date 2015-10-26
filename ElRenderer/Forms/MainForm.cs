@@ -14,8 +14,10 @@ namespace ElRenderer
         private readonly Color BackgroundColor = Color.Black;
         private Renderer renderer;
         private Mesh mesh;
+        // vector from viewport to object
         private Float3 viewDirection = new Float3(0, 0, 1).normalize();
-        private Float3 lightDirection = new Float3(0f, 1, 2);
+        // where lights come from, world coordinates, vector from origin to light source
+        private Float3 lightDirection = new Float3(0f, 3, -2).normalize();
 
         private int yAngle = 0;
         private int xAngle = 0;
@@ -39,20 +41,20 @@ namespace ElRenderer
         {
             InitForm();
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
-            renderer = new Renderer(screen, BackgroundColor, lightDirection);
+            renderer = new Renderer(screen, BackgroundColor);
 
-            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\dice.obj");
+            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\chooper.obj");
             //mesh = Test_Data.getOverlappedTriangles();
             //mesh.RecalculateNormals();
-            Bitmap texture = Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\african_head_diffuse.tga");
+            Bitmap texture = null;// Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\african_head_diffuse.tga");
 
             SceneObject sObject = new SceneObject {mesh = mesh,
-                                                   material = new Material(texture, RenderType.Regular),
-                                                   uniformScale = 100,
-                                                   rotation = new Float3(10, 10, 0),
+                                                   material = new Material(texture, RenderType.RegularWithWireframe),
+                                                   uniformScale = 2f,
+                                                   rotation = new Float3(0, 30, 0),
                                                    };
 
-            renderer.Render(sObject, viewDirection);
+            renderer.Render(sObject, viewDirection, lightDirection);
         }
 
         private void rotateMeshAroundXY(Mesh mesh, float xAngle, float yAngle)

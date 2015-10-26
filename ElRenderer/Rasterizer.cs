@@ -52,17 +52,15 @@ namespace ElRenderer
 
     public class Rasterizer
     {
-        private Float3 lightDirection;
         private Fragment[,] zBuffer;
                 
         // Contructor
-        public Rasterizer(Fragment[,] zBuffer, Float3 lightDirection)
+        public Rasterizer(Fragment[,] zBuffer)
         {
             this.zBuffer = zBuffer;
-            this.lightDirection = lightDirection;
         }
 
-        public void Rasterize(Mesh mesh, Material material)
+        public void Rasterize(Mesh mesh, Material material, Float3 lightDirection)
         {
             // set interpolated color
             for (int i = 0; i < mesh.Triangles.Count; i++)

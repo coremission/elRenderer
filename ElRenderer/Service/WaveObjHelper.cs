@@ -61,6 +61,7 @@ namespace ElRenderer.Service
 
                 string[] lineParts = ReplaceMultipleSpaces(lines[i]).Split(' ');
                 
+                // vertex positions
                 if (lineParts[0] == "v")
                 {
                     Float3 position = new Float3(float.Parse(lineParts[1], System.Globalization.CultureInfo.InvariantCulture),
@@ -70,12 +71,14 @@ namespace ElRenderer.Service
 
                     vPositions.Add(position);
                 }
+                // uv coordinates
                 if (lineParts[0] == "vt")
                 {
                     Float2 uv = new Float2(float.Parse(lineParts[1], System.Globalization.CultureInfo.InvariantCulture),
                                                  float.Parse(lineParts[2], System.Globalization.CultureInfo.InvariantCulture));
                     uvs.Add(uv);
                 }
+                // normals
                 if (lineParts[0] == "vn")
                 {
                     Float3 normal = new Float3(float.Parse(lineParts[1], System.Globalization.CultureInfo.InvariantCulture),
@@ -98,12 +101,16 @@ namespace ElRenderer.Service
                     int t2 = -1;
                     int t3 = -1;
 
-                    if (!string.IsNullOrEmpty(f1[1]))
-                        t1 = int.Parse(f1[1]);
-                    if (!string.IsNullOrEmpty(f2[1]))
-                        t2 = int.Parse(f2[1]);
-                    if (!string.IsNullOrEmpty(f3[1]))
-                        t3 = int.Parse(f3[1]);
+                    // if texture coordinates specified
+                    if (f1.Length > 1)
+                    {
+                        if (!string.IsNullOrEmpty(f1[1]))
+                            t1 = int.Parse(f1[1]);
+                        if (!string.IsNullOrEmpty(f2[1]))
+                            t2 = int.Parse(f2[1]);
+                        if (!string.IsNullOrEmpty(f3[1]))
+                            t3 = int.Parse(f3[1]);
+                    }
 
                     int n1 = 0, n2 = 0, n3 = 0;
                     // if normals specified
@@ -138,10 +145,13 @@ namespace ElRenderer.Service
                     v2.normal = normals[wTriangle.n2 - 1];
                     v3.normal = normals[wTriangle.n3 - 1];
                 }
-                
-                v1.uv = uvs[wTriangle.uv1 - 1];
-                v2.uv = uvs[wTriangle.uv2 - 1];
-                v3.uv = uvs[wTriangle.uv3 - 1];
+
+                if (uvs.Count > 0)
+                {
+                    v1.uv = uvs[wTriangle.uv1 - 1];
+                    v2.uv = uvs[wTriangle.uv2 - 1];
+                    v3.uv = uvs[wTriangle.uv3 - 1];
+                }
             }
 
             return result;
