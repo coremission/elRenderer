@@ -17,7 +17,7 @@ namespace ElRenderer
         // vector from viewport to object
         private Float3 viewDirection = new Float3(0, 0, 1).normalize();
         // where lights come from, world coordinates, vector from origin to light source
-        private Float3 lightDirection = new Float3(0f, 3, -2).normalize();
+        private Float3 lightDirection = new Float3(1f, 3, -2).normalize();
 
         private int yAngle = 0;
         private int xAngle = 0;
@@ -43,31 +43,19 @@ namespace ElRenderer
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
             renderer = new Renderer(screen, BackgroundColor);
 
-            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\african_head.obj");
-            //mesh = Test_Data.getOverlappedTriangles();
-            //mesh.RecalculateNormals();
-            Bitmap texture = null;// Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\african_head_diffuse.tga");
+            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\testModels\\overlapped-triangles.obj");
+            mesh.RecalculateNormals();
+
+            Bitmap texture = null;// Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\overlapped-triangles.tga");
 
             SceneObject sObject = new SceneObject {mesh = mesh,
-                                                   material = new Material(texture, RenderType.Regular),
-                                                   uniformScale = 300f,
-                                                   rotation = new Float3(0, 80, 0),
+                                                   material = new Material(texture, RenderType.RegularWithWireframeAndNormals),
+                                                   uniformScale = 100f,
+                                                   rotation = new Float3(0, 0, 0),
                                                    };
 
             renderer.Render(sObject, viewDirection, lightDirection);
         }
-
-        private void rotateMeshAroundXY(Mesh mesh, float xAngle, float yAngle)
-        {
-            // rotation matrix
-            Float3x3 R = Float3x3.getRotationMatrix(new Float3(xAngle, yAngle, 0));
-
-            for (int i = 0; i < mesh.Vertices.Count; i++)
-            {
-                Vertex v = mesh.Vertices[i];
-                v.position = v.position.mul(R);
-            }
-        }      
 
         protected override void OnPaint(PaintEventArgs e)
         {

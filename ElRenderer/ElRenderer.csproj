@@ -75,7 +75,6 @@
     <Compile Include="Renderer.cs" />
     <Compile Include="Service\WaveObjHelper.cs" />
     <Compile Include="3rdParty\TargaImage.cs" />
-    <Compile Include="Test_Data.cs" />
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -87,7 +86,24 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="3dModels\single-triangle.obj">
+    <None Include="3dModels\books.obj" />
+    <None Include="3dModels\boom.obj" />
+    <None Include="3dModels\boom_2.obj" />
+    <None Include="3dModels\building.obj" />
+    <None Include="3dModels\chooper.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="3dModels\Deer.obj" />
+    <None Include="3dModels\dice.obj" />
+    <None Include="3dModels\headbasemesh.obj" />
+    <None Include="3dModels\testModels\overlapped-triangles.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="3dModels\testModels\single-triangle.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="3dModels\testModels\sample-box.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="3dModels\african_head.obj">
@@ -96,6 +112,8 @@
     <None Include="3dModels\african_head_diffuse.tga">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="3dModels\stone2.obj" />
+    <None Include="3dModels\VW-new-beetle.obj" />
     <None Include="app.config" />
     <None Include="3dModels\notTriangulated\farmhouse.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -118,6 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Forms\App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="3dModels\building-texture.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

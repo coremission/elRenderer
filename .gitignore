@@ -2,8 +2,8 @@
 *.exe
 *.pdb
 *.cache
-ElRenderer/bin
-ElRenderer/obj
-MathTests/bin
-MathTests/obj
+ElRenderer/bin/
+ElRenderer/obj/
+MathTests/bin/
+MathTests/obj/
 .vs/*
