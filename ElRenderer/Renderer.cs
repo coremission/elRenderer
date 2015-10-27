@@ -65,8 +65,9 @@ namespace ElRenderer
             Float3x3 S = Float3x3.identity * sObject.uniformScale;
             // rotation matrix
             Float3x3 R = Float3x3.getRotationMatrix(sObject.rotation);
-
-            Float3x3 Combined = S * R;
+            Float3x3 CombinedLinear = S * R;
+            // projection/translation
+            Float4x4 PT = new Float4x4(CombinedLinear);
 
             // BACK FACE CULLING
             if (backFaceCulling)
@@ -89,7 +90,7 @@ namespace ElRenderer
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {
                 Vertex v = mesh.Vertices[i];
-                Float3 p = v.position.mul(Combined);
+                Float3 p = v.position.mul(CombinedLinear);
                 // TODO: Transforming normals while NON UNIFORM TRANSFORMS
                 v.normal = v.normal.mul(R);
                 v.position = new Float3(p.x + Defaults.WIDTH / 2, p.y + Defaults.HEIGHT / 2, p.z);

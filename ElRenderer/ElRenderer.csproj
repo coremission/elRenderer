@@ -94,18 +94,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="3dModels\Deer.obj" />
-    <None Include="3dModels\dice.obj" />
-    <None Include="3dModels\headbasemesh.obj" />
-    <None Include="3dModels\testModels\overlapped-triangles.obj">
+    <None Include="3dModels\dice.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </None>
-    <None Include="3dModels\testModels\single-triangle.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="3dModels\testModels\sample-box.obj">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="3dModels\headbasemesh.obj" />
     <None Include="3dModels\african_head.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -139,6 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="3dModels\building-texture.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="3dModels\testModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
