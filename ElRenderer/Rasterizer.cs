@@ -131,7 +131,7 @@ namespace ElRenderer
                     int intLambert = (int)(lc * 255);
                     Color c = Color.FromArgb(intLambert, intLambert, intLambert);
 
-                    //c = tex2D(material.diffuseTexture, C.u, C.v);
+                    c = tex2D(material.diffuseTexture, C.u, C.v);
                     DrawPointToFrameBuffer(x, y, C.z, c);
                 }
             }
