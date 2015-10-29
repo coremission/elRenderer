@@ -68,7 +68,8 @@ namespace ElRenderer
             Float3x3 CombinedLinear = S * R;
             // projection/translation
             Float4x4 PT = new Float4x4(CombinedLinear);
-
+            PT.setTranslation(sObject.localPosition);
+            PT.setProjection(1);
             // BACK FACE CULLING
             if (backFaceCulling)
             {
@@ -90,9 +91,11 @@ namespace ElRenderer
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {
                 Vertex v = mesh.Vertices[i];
-                Float3 p = v.position.mul(CombinedLinear);
+                Float3 p = PT.transformPoint(v.position);
                 // TODO: Transforming normals while NON UNIFORM TRANSFORMS
                 v.normal = v.normal.mul(R);
+
+                // TODO: place to center of screen
                 v.position = new Float3(p.x + Defaults.WIDTH / 2, p.y + Defaults.HEIGHT / 2, p.z);
             }
 

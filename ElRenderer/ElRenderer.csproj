@@ -105,6 +105,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="3dModels\stone2.obj" />
+    <None Include="3dModels\testModels\overlapped-triangles.obj" />
+    <None Include="3dModels\testModels\sample-box.mtl" />
+    <None Include="3dModels\testModels\sample-box.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="3dModels\testModels\single-triangle.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="3dModels\VW-new-beetle.obj" />
     <None Include="app.config" />
     <None Include="3dModels\notTriangulated\farmhouse.obj">
@@ -132,9 +140,7 @@
   <ItemGroup>
     <Content Include="3dModels\building-texture.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="3dModels\testModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

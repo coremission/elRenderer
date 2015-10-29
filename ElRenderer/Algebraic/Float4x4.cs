@@ -58,6 +58,53 @@ namespace ElRenderer.Algebraic
         {}
         #endregion
 
+        public float this[int i, int j] {
+            get {
+                return _m[i, j];
+            }
+        }
+
+        #region Operators
+
+        public Float4x4 scalarMul(float s)
+        {
+            float[,] newArr = new float[4, 4];
+
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 4; j++) {
+                    newArr[i, j] = _m[i, j] * s;
+                }
+
+            return new Float4x4(newArr);
+        }
+
+        public static Float4x4 operator * (Float4x4 M, float s)
+        {
+            return M.scalarMul(s);
+        }
+
+        public static Float4x4 operator *(float s, Float4x4 M)
+        {
+            return M.scalarMul(s);
+        }
+
+        #endregion
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Float4x4))
+                return false;
+            Float4x4 B = (Float4x4)obj;
+
+            for(int i = 0; i < 4; i++)
+               for(int j = 0; j < 4; j++) {
+                    if (!_m[i, j].Equals(B[i, j]))
+                        return false;
+               }
+
+            return true;
+        }
+
         public Float4 getRow(int i)
         {
             return new Float4(_m[i, 0], _m[i, 1], _m[i, 2], _m[i, 3]);
@@ -79,7 +126,46 @@ namespace ElRenderer.Algebraic
 
         public Float3 transformPoint(Float3 p)
         {
-            return this.mul(new Float4(p, 1)).xyz;
+            Float4 tP = this.mul(new Float4(p, 1));
+            return tP.xyz * (1f/ tP.w);
+        }
+
+        public static Float4x4 getTranslationMatrix(Float3 t)
+        {
+            return new Float4x4(1  , 0  , 0  , 0,
+                                0  , 1  , 0  , 0,
+                                0  , 0  , 1  , 0,
+                                t.x, t.y, t.z, 1);
+        }
+
+        public static Float4x4 getProjectionMatrix(float d)
+        {
+            return new Float4x4(1, 0, 0, 0,
+                                0, 1, 0, 0,
+                                0, 0, 1, d,
+                                0, 0, 0, 1);
+        }
+
+        public static Float4x4 identity
+        {
+            get {
+                return new Float4x4(1, 0, 0, 0,
+                                    0, 1, 0, 0,
+                                    0, 0, 1, 0,
+                                    0, 0, 0, 1);
+            }
+        }
+
+        public void setTranslation(Float3 t)
+        {
+            this._m[3, 0] = t.x;
+            this._m[3, 1] = t.y;
+            this._m[3, 2] = t.z;
+        }
+
+        public void setProjection(float d)
+        {
+            this._m[2, 3] = d;
         }
     }
 }
