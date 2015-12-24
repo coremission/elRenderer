@@ -63,7 +63,7 @@ namespace MathTests
         {
             Float3 p = new Float3(2, 4, 2);
 
-            Float4x4 Projection = Float4x4.getProjectionMatrix(2);
+            Float4x4 Projection = Float4x4.getProjectionMatrix(1);
 
             Float3 p1 = Projection.transformPoint(p);
         }

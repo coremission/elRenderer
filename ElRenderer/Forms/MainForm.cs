@@ -43,7 +43,7 @@ namespace ElRenderer
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
             renderer = new Renderer(screen, BackgroundColor);
 
-            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\testModels\\single-triangle.obj");
+            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\testModels\\sample-box.obj");
             //mesh.RecalculateNormals();
 
             Bitmap texture = null;// Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\african_head_diffuse.tga");
@@ -51,11 +51,11 @@ namespace ElRenderer
             SceneObject sObject = new SceneObject {    mesh = mesh,
                                                        material = new Material(texture, RenderType.Wireframe),
                                                        uniformScale = 100f,
-                                                       rotation = new Float3(0, 0, 0),
-                                                       localPosition = new Float3(0, 0, 10)
+                                                       rotation = new Float3(0, 10, 0),
+                                                       localPosition = new Float3(0, 0, 150)
                                                    };
 
-            renderer.Render(sObject, viewDirection, lightDirection);
+            renderer.Render(sObject, viewDirection, lightDirection, true);
         }
 
         protected override void OnPaint(PaintEventArgs e)

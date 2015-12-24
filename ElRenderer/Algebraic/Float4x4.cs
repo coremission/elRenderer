@@ -127,7 +127,7 @@ namespace ElRenderer.Algebraic
         public Float3 transformPoint(Float3 p)
         {
             Float4 tP = this.mul(new Float4(p, 1));
-            return tP.xyz * (1f/ tP.w);
+            return tP.xyz * (1f / tP.w);
         }
 
         public static Float4x4 getTranslationMatrix(Float3 t)
@@ -143,7 +143,7 @@ namespace ElRenderer.Algebraic
             return new Float4x4(1, 0, 0, 0,
                                 0, 1, 0, 0,
                                 0, 0, 1, d,
-                                0, 0, 0, 1);
+                                0, 0, 0, 0);
         }
 
         public static Float4x4 identity
@@ -161,11 +161,6 @@ namespace ElRenderer.Algebraic
             this._m[3, 0] = t.x;
             this._m[3, 1] = t.y;
             this._m[3, 2] = t.z;
-        }
-
-        public void setProjection(float d)
-        {
-            this._m[2, 3] = d;
         }
     }
 }

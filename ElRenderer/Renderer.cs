@@ -53,7 +53,7 @@ namespace ElRenderer
             Int2[] t2 = new[] { new Int2(180, 150), new Int2(120, 160), new Int2(130, 180) };
         }
 
-        public void Render(SceneObject sObject, Float3 viewDirection, Float3 lightDirection)
+        public void Render(SceneObject sObject, Float3 viewDirection, Float3 lightDirection, bool isPerspectiveProjection = true)
         {
             Mesh mesh = sObject.mesh;
             Color wireFrameColor = Color.LightGreen;
@@ -66,10 +66,12 @@ namespace ElRenderer
             // rotation matrix
             Float3x3 R = Float3x3.getRotationMatrix(sObject.rotation);
             Float3x3 CombinedLinear = S * R;
-            // projection/translation
-            Float4x4 PT = new Float4x4(CombinedLinear);
-            PT.setTranslation(sObject.localPosition);
-            PT.setProjection(1);
+            // translation
+            Float4x4 Tr = new Float4x4(CombinedLinear);
+            Tr.setTranslation(sObject.localPosition);
+            // projection
+            Float4x4 Pr = isPerspectiveProjection ? Float4x4.getProjectionMatrix(1f / 100f) : Float4x4.identity;
+
             // BACK FACE CULLING
             if (backFaceCulling)
             {
@@ -91,7 +93,9 @@ namespace ElRenderer
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {
                 Vertex v = mesh.Vertices[i];
-                Float3 p = PT.transformPoint(v.position);
+                Float3 p = Tr.transformPoint(v.position);
+                p = Pr.transformPoint(p);
+
                 // TODO: Transforming normals while NON UNIFORM TRANSFORMS
                 v.normal = v.normal.mul(R);
 
