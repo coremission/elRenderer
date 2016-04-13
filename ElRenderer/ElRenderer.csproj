@@ -113,7 +113,9 @@
     <None Include="3dModels\testModels\single-triangle.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="3dModels\VW-new-beetle.obj" />
+    <None Include="3dModels\VW-new-beetle.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
     <None Include="3dModels\notTriangulated\farmhouse.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

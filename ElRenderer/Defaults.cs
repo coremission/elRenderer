@@ -2,7 +2,7 @@
 {
     public static class Defaults
     {
-        public const int WIDTH = 500;
-        public const int HEIGHT = 500;
+        public const int WIDTH = 700;
+        public const int HEIGHT = 700;
     }
 }
