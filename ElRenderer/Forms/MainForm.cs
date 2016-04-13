@@ -43,19 +43,19 @@ namespace ElRenderer
             screen = new Bitmap(Defaults.WIDTH, Defaults.HEIGHT);
             renderer = new Renderer(screen, BackgroundColor);
 
-            mesh = WaveObjHelper.ReadMeshFromFile(appPath + "3dModels\\VW-new-beetle.obj");
-            mesh.RecalculateNormals();
+            mesh = WaveObjHelper.ReadMeshFromFile(appPath + @"3dModels\bear.obj");
+            //mesh.RecalculateNormals();
 
-            Bitmap texture = Paloma.TargaImage.LoadTargaImage(appPath + "3dModels\\african_head_diffuse.tga");
+            Bitmap texture = Paloma.TargaImage.LoadTargaImage(appPath + @"3dModels\bear.tga");
 
             SceneObject sObject = new SceneObject {    mesh = mesh,
-                                                       material = new Material(texture, RenderType.Regular),
+                                                       material = new Material(texture, RenderType.RegularWithWireframe),
                                                        uniformScale = 20f,
-                                                       rotation = new Float3(40, 120, 0),
-                                                       localPosition = new Float3(0, 0, 550)
+                                                       rotation = new Float3(40, 150, 0),
+                                                       localPosition = new Float3(0, -210, 550)
                                                    };
 
-            renderer.Render(sObject, viewDirection, lightDirection, false);
+            renderer.Render(sObject, viewDirection, lightDirection, true);
         }
 
         protected override void OnPaint(PaintEventArgs e)

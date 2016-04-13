@@ -86,10 +86,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="3dModels\bear.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="3dModels\books.obj" />
     <None Include="3dModels\boom.obj" />
     <None Include="3dModels\boom_2.obj" />
-    <None Include="3dModels\building.obj" />
+    <None Include="3dModels\building.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="3dModels\chooper.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -111,9 +116,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="3dModels\testModels\single-triangle.obj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="3dModels\VW-new-beetle.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.config" />
@@ -140,6 +142,9 @@
     <None Include="Forms\App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="3dModels\bear.tga">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="3dModels\building-texture.jpg" />
   </ItemGroup>
   <ItemGroup />

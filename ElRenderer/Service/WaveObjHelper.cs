@@ -148,6 +148,8 @@ namespace ElRenderer.Service
 
                 if (uvs.Count > 0)
                 {
+                    if (wTriangle.uv1 < 0 || wTriangle.uv2 < 0 || wTriangle.uv3 < 0)
+                        continue;
                     v1.uv = uvs[wTriangle.uv1 - 1];
                     v2.uv = uvs[wTriangle.uv2 - 1];
                     v3.uv = uvs[wTriangle.uv3 - 1];

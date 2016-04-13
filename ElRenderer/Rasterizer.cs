@@ -129,7 +129,7 @@ namespace ElRenderer
                     int intLambert = (int)(lc * 255);
                     Color c = Color.FromArgb(intLambert, intLambert, intLambert);
 
-                    //c = tex2D(material.diffuseTexture, C.u, C.v);
+                    c = tex2D(material.diffuseTexture, C.u, C.v);
                     DrawPointToFrameBuffer(x, y, C.z, c);
                 }
             }
@@ -147,11 +147,19 @@ namespace ElRenderer
 
         private Color tex2D(Bitmap tex, float u, float v)
         {
-            u = Utils.Clamp(0f, 1f, u);
-            v = Utils.Clamp(0f, 1f, v);
+            //int uc = (int) (u*255);
+            //int vc = (int) (v*255);
 
-            int x = (int)((1 - u) * tex.Width + 0.5f);
-            int y = (int)((1 - v) * tex.Height + 0.5f);
+            //return Color.FromArgb(122, uc, vc);
+            u = (u + 1) % 1;
+            v = (v + 1) % 1;
+            //int x = (int)((1 - u) * tex.Width);
+            //int y = (int)((1 - v) * tex.Height);
+
+            int x = (int)(u * tex.Width);
+            int y = (int)((1 - v) * tex.Height);
+
+
             return tex.GetPixel(x, y);
         }
 
