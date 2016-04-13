@@ -1,9 +1,7 @@
 ﻿using System.Drawing;
-using ElRenderer.Model;
-// TODO: To use helper methods more comfortable
-using static ElRenderer.Utils;
-using ElRenderer.Extensions;
 using ElRenderer.Algebraic;
+using ElRenderer.Extensions;
+using ElRenderer.Model;
 
 namespace ElRenderer
 {
@@ -99,9 +97,9 @@ namespace ElRenderer
             IVertex v2 = new IVertex(_v2);
             IVertex v3 = new IVertex(_v3);
 
-            if (v1.y > v2.y) swap(ref v1, ref v2);
-            if (v1.y > v3.y) swap(ref v1, ref v3);
-            if (v2.y > v3.y) swap(ref v2, ref v3);
+            if (v1.y > v2.y) Utils.swap(ref v1, ref v2);
+            if (v1.y > v3.y) Utils.swap(ref v1, ref v3);
+            if (v2.y > v3.y) Utils.swap(ref v2, ref v3);
 
             int triangleYHeight = v3.y - v1.y + 1;
             int firstSegmentHeight = v2.y - v1.y + 1;
@@ -119,7 +117,7 @@ namespace ElRenderer
                 IVertex B = IVertex.lerp(isFirstSegment ? v1 : v2, isFirstSegment ? v2 : v3, beta);
 
                 if (A.x > B.x)
-                    swap(ref A, ref B);
+                    Utils.swap(ref A, ref B);
                 for (int x = A.x; x <= B.x; x++)
                 {
                     // check extremes
@@ -131,7 +129,7 @@ namespace ElRenderer
                     int intLambert = (int)(lc * 255);
                     Color c = Color.FromArgb(intLambert, intLambert, intLambert);
 
-                    c = tex2D(material.diffuseTexture, C.u, C.v);
+                    //c = tex2D(material.diffuseTexture, C.u, C.v);
                     DrawPointToFrameBuffer(x, y, C.z, c);
                 }
             }
@@ -144,13 +142,13 @@ namespace ElRenderer
 
             float lambertComponent = normal.dot(lightDirection.normalize());
             lambertComponent = lambertComponent < 0 ? 0 : lambertComponent;
-            return Clamp(0, 255, lambertComponent);
+            return Utils.Clamp(0, 255, lambertComponent);
         }
 
         private Color tex2D(Bitmap tex, float u, float v)
         {
-            u = Clamp(0f, 1f, u);
-            v = Clamp(0f, 1f, v);
+            u = Utils.Clamp(0f, 1f, u);
+            v = Utils.Clamp(0f, 1f, v);
 
             int x = (int)((1 - u) * tex.Width + 0.5f);
             int y = (int)((1 - v) * tex.Height + 0.5f);

@@ -53,7 +53,7 @@ namespace ElRenderer
             Int2[] t2 = new[] { new Int2(180, 150), new Int2(120, 160), new Int2(130, 180) };
         }
 
-        public void Render(SceneObject sObject, Float3 viewDirection, Float3 lightDirection, bool isPerspectiveProjection = true)
+        public void Render(SceneObject sObject, Float3 viewDirection, Float3 lightDirection, bool useProjection = true)
         {
             Mesh mesh = sObject.mesh;
             Color wireFrameColor = Color.LightGreen;
@@ -67,10 +67,10 @@ namespace ElRenderer
             Float3x3 R = Float3x3.getRotationMatrix(sObject.rotation);
             Float3x3 CombinedLinear = S * R;
             // translation
-            Float4x4 Tr = new Float4x4(CombinedLinear);
+            Float4x4 Tr = Float4x4.identity;
             Tr.setTranslation(sObject.localPosition);
             // projection
-            Float4x4 Pr = isPerspectiveProjection ? Float4x4.getProjectionMatrix(1f / 100f) : Float4x4.identity;
+            Float4x4 Pr = useProjection ? Float4x4.getProjectionMatrix(10f, 1300f, 1f, 1f) : Float4x4.identity;
 
             // BACK FACE CULLING
             if (backFaceCulling)
@@ -93,14 +93,23 @@ namespace ElRenderer
             for (int i = 0; i < mesh.Vertices.Count; i++)
             {
                 Vertex v = mesh.Vertices[i];
-                Float3 p = Tr.transformPoint(v.position);
-                p = Pr.transformPoint(p);
-
+                // scale
+                var p = v.position.mul(S);
+                // rotate
+                p = p.mul(R);
+                // translate
+                p = Tr.transformPoint(p);
+                // project
+                if(useProjection)
+                    p = Pr.transformPoint(p);
                 // TODO: Transforming normals while NON UNIFORM TRANSFORMS
                 v.normal = v.normal.mul(R);
 
                 // TODO: place to center of screen
-                v.position = new Float3(p.x + Defaults.WIDTH / 2, p.y + Defaults.HEIGHT / 2, p.z);
+                if(useProjection)
+                    v.position = new Float3(p.x * Defaults.WIDTH + Defaults.WIDTH / 2f, p.y * Defaults.HEIGHT + Defaults.HEIGHT / 2f, p.z);
+                else
+                    v.position = new Float3(p.x + Defaults.WIDTH / 2f, p.y + Defaults.HEIGHT / 2f, p.z);
             }
 
             if((renderType & RenderType.Regular) != 0)

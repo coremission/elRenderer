@@ -1,5 +1,4 @@
 ﻿using System;
-using static System.Math;
 
 namespace ElRenderer.Algebraic
 {
@@ -138,12 +137,25 @@ namespace ElRenderer.Algebraic
                                 t.x, t.y, t.z, 1);
         }
 
-        public static Float4x4 getProjectionMatrix(float d)
+        public static Float4x4 getOrthoProjectionMatrix(float n, float f, float t, float b, float r, float l)
         {
-            return new Float4x4(1, 0, 0, 0,
-                                0, 1, 0, 0,
-                                0, 0, 1, d,
-                                0, 0, 0, 0);
+            return new Float4x4(1f / (r - l)  , 0             , 0             , 0,
+                                0             , 1f / (t - b)  , 0             , 0,
+                                0             , 0             , 1f / (f - n)  , 0,
+                                -(l / (r - l)), -(b / (t - b)), -(n / (f - n)), 1);
+        }
+
+        public static Float4x4 getProjectionMatrix(float n, float f, float v, float h)
+        {
+            return getProjectionMatrix(n, f, v, -v, h, -h);
+        }
+
+        public static Float4x4 getProjectionMatrix(float n, float f, float t, float b, float r, float l)
+        {
+            return new Float4x4(1f / (r - l)  , 0             , 0             , 0,
+                                0             , 1f / (t - b)  , 0             , 0,
+                                0             , 0             , 1f / (f - n)  , 1,
+                                -(l / (r - l)), -(b / (t - b)), -(n / (f - n)), 0);
         }
 
         public static Float4x4 identity

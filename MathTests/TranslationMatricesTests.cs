@@ -1,13 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ElRenderer.Algebraic;
+﻿using ElRenderer.Algebraic;
+using NUnit.Framework;
 
 namespace MathTests
 {
-    [TestClass]
+    [TestFixture]
     public class TranslationMatricesTests
     {
-        [TestMethod]
+        [Test]
         public void NoTransformTest()
         {
             Float3 p = new Float3(1, 3, 7);
@@ -16,7 +15,7 @@ namespace MathTests
             Assert.AreEqual(p, M.transformPoint(p));
         }
 
-        [TestMethod]
+        [Test]
         public void MultiplicationTest()
         {
             Float4x4 M = Float4x4.identity;
@@ -26,7 +25,7 @@ namespace MathTests
             Assert.AreEqual(M, C);
         }
 
-        [TestMethod]
+        [Test]
         public void SimpleTranslationTest()
         {
             Float3 p = new Float3(1, 3, 7);
@@ -41,9 +40,10 @@ namespace MathTests
 
             Assert.AreEqual(M, M2);
             Assert.AreEqual(p + t, M.transformPoint(p));
+            Assert.AreEqual(p + t, M2.transformPoint(p));
         }
 
-        [TestMethod]
+        [Test]
         public void AddTranslationToExistingMatrixTests()
         {
             Float3 p = new Float3(0, 0, 1);
@@ -56,16 +56,6 @@ namespace MathTests
 
             Assert.AreEqual(p + t, X.transformPoint(p));
             Assert.AreEqual(p, minusX.transformPoint(X.transformPoint(p)));
-        }
-
-        [TestMethod]
-        public void SimpleProjectionTest()
-        {
-            Float3 p = new Float3(2, 4, 2);
-
-            Float4x4 Projection = Float4x4.getProjectionMatrix(1);
-
-            Float3 p1 = Projection.transformPoint(p);
         }
     }
 }
